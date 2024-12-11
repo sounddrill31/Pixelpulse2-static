@@ -35,7 +35,7 @@ jobs:
       if: runner.os == 'macOS'
       run: |
         brew update
-        brew install libusb qt
+        brew install libusb qt boost
         brew upgrade qt
         brew link libusb
         brew link qt
@@ -51,7 +51,7 @@ jobs:
         refreshenv
         C:\msys64\usr\bin\bash -lc "pacman -Syu --noconfirm"
         C:\msys64\usr\bin\bash -lc "pacman --noconfirm -Sy mingw-w64-i686-boost mingw-w64-i686-python3 mingw-w64-i686-libzip mingw-w64-i686-icu"
-        C:\msys64\usr\bin\bash -lc "pacman --noconfirm -Sy mingw-w64-x86_64-boost mingw-w64-x86_64-python3 mingw-w64-x86_64-libzip mingw-w64-x86_64-icu"
+        C:\msys64\usr\bin\bash -lc "pacman --noconfirm -Sy mingw-w64-x86_64-boost mingw-w64-x86_64-python3 mingw-w64-x86_64-libzip mingw-w64-x86_64-icu mingw-w64-x86_64-toolchain"
 
     - name: Clone and build libsmu (Linux and macOS)
       if: runner.os != 'Windows'
