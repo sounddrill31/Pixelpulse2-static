@@ -139,6 +139,10 @@ include_directories(
 	${CMAKE_SOURCE_DIR}
 )
 
+if(POLICY CMP0167)
+  cmake_policy(SET CMP0167 NEW)
+endif()
+
 if (APPLE)
 	option(ENABLE_APPLICATION_BUNDLE "Enable application bundle for OSX" ON)
 endif(APPLE)
