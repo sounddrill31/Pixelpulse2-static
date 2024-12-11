@@ -35,8 +35,8 @@ jobs:
       if: runner.os == 'macOS'
       run: |
         brew update
-        brew install libusb qt boost
-        brew upgrade qt
+        brew install libusb qt@5 boost
+        brew upgrade qt@5
         brew link libusb
         brew link qt
         echo "/usr/local/opt/qt/bin" >> $GITHUB_PATH
