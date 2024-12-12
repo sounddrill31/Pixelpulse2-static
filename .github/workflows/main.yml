@@ -143,9 +143,9 @@ jobs:
           mkdir -p AppDir/usr/share/applications
 
           # Copy libsmu library
-          cp /usr/lib/libsmu.so.1.0.4 AppDir/usr/lib/
-          ln -s AppDir/usr/lib/libsmu.so.1.0.4 AppDir/usr/lib/libsmu.so.1
-          ln -s AppDir/usr/lib/libsmu.so.1.0.4 AppDir/usr/lib/libsmu.so
+          cp /usr/lib/x86_64-linux-gnu/libsmu.so.1.0.4 AppDir/usr/lib/x86_64-linux-gnu/
+          ln -s AppDir/usr/lib/x86_64-linux-gnu/libsmu.so.1.0.4 AppDir/usr/lib/x86_64-linux-gnu/libsmu.so.1
+          ln -s AppDir/usr/lib/x86_64-linux-gnu/libsmu.so.1.0.4 AppDir/usr/lib/x86_64-linux-gnu/libsmu.so
 
           # Copy Pixelpulse2 binary
           cp /usr/bin/pixelpulse2 AppDir/usr/bin/
