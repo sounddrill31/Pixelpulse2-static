@@ -141,24 +141,33 @@ jobs:
           mkdir -p AppDir/usr/lib
           mkdir -p AppDir/usr/share/icons/hicolor/apps/scalable
           mkdir -p AppDir/usr/share/applications
-      
+
+          # Copy libsmu library
+          cp /usr/local/lib/libsmu.so.1.0.4 AppDir/usr/lib/
+          ln -s libsmu.so.1.0.4 AppDir/usr/lib/libsmu.so.1
+          ln -s libsmu.so.1.0.4 AppDir/usr/lib/libsmu.so
+
           # Copy Pixelpulse2 binary
           cp /usr/bin/pixelpulse2 AppDir/usr/bin/
-      
+
           # Copy icon
           cp /usr/share/icons/hicolor/apps/scalable/pp2.ico AppDir/usr/share/icons/hicolor/apps/scalable/
-      
+
           # Create .desktop file
           cp debian/*.desktop AppDir/usr/share/applications/pixelpulse2.desktop 
-      
+
           # Ensure executable permissions
           chmod +x AppDir/usr/bin/pixelpulse2
-      
+
           # Copy key system libraries that might not be auto-detected
           # Note: Be selective and only include necessary libraries
           cp /usr/lib/x86_64-linux-gnu/libudev.so.1 AppDir/usr/lib/
           cp /usr/lib/x86_64-linux-gnu/libusb-1.0.so.0 AppDir/usr/lib/
-      
+
+          # Copy udev rules
+          mkdir -p AppDir/etc/udev/rules.d
+          cp /etc/udev/rules.d/53-adi-m1k-usb.rules AppDir/etc/udev/rules.d/
+
           wget -O linuxdeploy.AppImage https://github.com/linuxdeploy/linuxdeploy/releases/download/2.0.0-alpha-1-20241106/linuxdeploy-x86_64.AppImage
           wget -O linuxdeploy-plugin-qt.AppImage https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/2.0.0-alpha-1-20241106/linuxdeploy-plugin-qt-x86_64.AppImage
           # Create the AppImage with Qt plugin to handle Qt dependencies
@@ -170,7 +179,7 @@ jobs:
           --appdir AppDir \
           --plugin qt \
           --output appimage -i debian/*.png
-      
+
           # List the generated AppImage
           ls -l Pixelpulse2*.AppImage
 
@@ -179,7 +188,7 @@ jobs:
       run: |
             # Check library dependencies
             ldd AppDir/usr/bin/pixelpulse2
-        
+
             # Verify AppImage can be mounted and executed
             chmod +x Pixelpulse2*.AppImage
             ./Pixelpulse2*.AppImage --help || true
