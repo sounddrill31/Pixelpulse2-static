@@ -182,7 +182,6 @@ jobs:
           ./linuxdeploy.AppImage \
           --appdir AppDir \
           --plugin qt \
-          -d \
           --output appimage -i debian/*.png
 
           # List the generated AppImage
