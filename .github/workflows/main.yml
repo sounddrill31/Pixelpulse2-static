@@ -139,6 +139,7 @@ jobs:
           # Prepare AppDir structure
           mkdir -p AppDir/usr/bin
           mkdir -p AppDir/usr/lib
+          mkdir -p AppDir/usr/lib/x86_64-linux-gnu/
           mkdir -p AppDir/usr/share/icons/hicolor/apps/scalable
           mkdir -p AppDir/usr/share/applications
 
