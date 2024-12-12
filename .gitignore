@@ -3,3 +3,5 @@ pixelpulse2
 release
 libsmu/
 build/
+AppDir/
+*.AppImage
