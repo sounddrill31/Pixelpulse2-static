@@ -60,7 +60,7 @@ jobs:
         git clone https://github.com/sounddrill31/libsmu.git
         cd libsmu
         mkdir build && cd build
-        cmake -DBUILD_PYTHON=OFF -DCMAKE_INSTALL_PREFIX=/usr/local/ ..
+        cmake -DBUILD_PYTHON=OFF -DCMAKE_INSTALL_PREFIX=/usr/ ..
         make
         sudo make install
         cd ../..
@@ -143,7 +143,7 @@ jobs:
           mkdir -p AppDir/usr/share/applications
 
           # Copy libsmu library
-          cp /usr/local/lib/libsmu.so.1.0.4 AppDir/usr/lib/
+          cp /usr/lib/libsmu.so.1.0.4 AppDir/usr/lib/
           ln -s AppDir/usr/lib/libsmu.so.1.0.4 AppDir/usr/lib/libsmu.so.1
           ln -s AppDir/usr/lib/libsmu.so.1.0.4 AppDir/usr/lib/libsmu.so
 
