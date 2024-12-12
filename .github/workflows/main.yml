@@ -177,7 +177,9 @@ jobs:
 
           cp -r qml AppDir/usr/share/pixelpulse2/
 
-          EXTRA_QT_MODULES=quick;graphicaleffects \
+          export EXTRA_QT_MODULES+=quick
+          export EXTRA_QT_MODULES+=graphicaleffects
+
           ARCH=x86_64 \
           VERSION=1.0 \
           ./linuxdeploy.AppImage \
