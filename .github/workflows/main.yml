@@ -142,6 +142,7 @@ jobs:
           mkdir -p AppDir/usr/lib/x86_64-linux-gnu/
           mkdir -p AppDir/usr/share/icons/hicolor/apps/scalable
           mkdir -p AppDir/usr/share/applications
+          mkdir -p AppDir/usr/share/pixelpulse2/
 
           # Copy libsmu library
           cp /usr/lib/x86_64-linux-gnu/libsmu.so.1.0.4 AppDir/usr/lib/x86_64-linux-gnu/
@@ -174,11 +175,15 @@ jobs:
           # Create the AppImage with Qt plugin to handle Qt dependencies
           chmod +x linuxdeploy*.AppImage
 
+          cp -r qml AppDir/usr/share/pixelpulse2/
+
           ARCH=x86_64 \
           VERSION=1.0 \
           ./linuxdeploy.AppImage \
           --appdir AppDir \
           --plugin qt \
+          -d \
+          --deploy-qt-libs-only \
           --output appimage -i debian/*.png
 
           # List the generated AppImage
