@@ -144,8 +144,8 @@ jobs:
 
           # Copy libsmu library
           cp /usr/local/lib/libsmu.so.1.0.4 AppDir/usr/lib/
-          ln -s libsmu.so.1.0.4 AppDir/usr/lib/libsmu.so.1
-          ln -s libsmu.so.1.0.4 AppDir/usr/lib/libsmu.so
+          ln -s AppDir/usr/lib/libsmu.so.1.0.4 AppDir/usr/lib/libsmu.so.1
+          ln -s AppDir/usr/lib/libsmu.so.1.0.4 AppDir/usr/lib/libsmu.so
 
           # Copy Pixelpulse2 binary
           cp /usr/bin/pixelpulse2 AppDir/usr/bin/
