@@ -1,3 +1,5 @@
 Makefile*
 pixelpulse2
 release
+libsmu/
+build/
