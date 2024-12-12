@@ -31,7 +31,7 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y libudev-dev libusb-1.0-0-dev libboost-all-dev libfuse2 fuse3
         sudo apt-get install -y qt5-default qttools5-dev qtdeclarative5-dev libqt5svg5-dev libqt5opengl5-dev cmake
-
+        sudo apt-get install -y qml-module-qtquick2 qml-module-qtquick-extras qml-module-qtquick-window2 qml-module-qtquick-controls2 qml-module-qtgraphicaleffects  
     - name: Install dependencies (macOS)
       if: runner.os == 'macOS'
       run: |
