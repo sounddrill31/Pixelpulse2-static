@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixelPulse 2 AppImage Builds</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+        }
+        .command-box {
+            width: 80%;
+            max-width: 600px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            margin: 20px 0;
+        }
+        .switcher {
+            margin: 20px 0;
+        }
+        .command {
+            font-family: monospace;
+            background-color: #eaeaea;
+            padding: 10px;
+            border-radius: 5px;
+            width: 100%;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>PixelPulse 2 AppImage Builds By Sounddrill31 - WIP/Untested</h1>
+    <div class="command-box">
+        <p>Run this command on a Linux machine to get started, only for x86_64 and Linux for now.</p>
+        <div class="switcher">
+            <label>
+                <input type="radio" name="commandType" value="curl" checked>
+                curl
+            </label>
+            <label>
+                <input type="radio" name="commandType" value="wget">
+                wget
+            </label>
+        </div>
+        <div class="command" id="commandOutput">
+            curl https://sounddrill31.github.io/Pixelpulse2/install.sh | bash
+        </div>
+    </div>
+
+    <script>
+        const commandOutput = document.getElementById('commandOutput');
+        const commandTypeRadios = document.querySelectorAll('input[name="commandType"]');
+
+        commandTypeRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (radio.value === 'curl') {
+                    commandOutput.textContent = 'curl https://sounddrill31.github.io/Pixelpulse2/install.sh | bash';
+                } else {
+                    commandOutput.textContent = 'wget -qO- https://sounddrill31.github.io/Pixelpulse2/install.sh | bash';
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
