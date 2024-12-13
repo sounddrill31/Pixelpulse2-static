@@ -170,6 +170,8 @@ jobs:
           # Copy udev rules
           mkdir -p AppDir/etc/udev/rules.d
           cp /etc/udev/rules.d/53-adi-m1k-usb.rules AppDir/etc/udev/rules.d/
+          # Hack: Use uaccess along with plugdev
+          sed -i 's/GROUP="plugdev"/GROUP="plugdev", TAG+="uaccess"/g' AppDir/etc/udev/rules.d/53-adi-m1k-usb.rules
 
           wget -O linuxdeploy.AppImage https://github.com/linuxdeploy/linuxdeploy/releases/download/2.0.0-alpha-1-20241106/linuxdeploy-x86_64.AppImage
           wget -O linuxdeploy-plugin-qt.AppImage https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/2.0.0-alpha-1-20241106/linuxdeploy-plugin-qt-x86_64.AppImage
