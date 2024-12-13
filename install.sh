@@ -58,7 +58,7 @@ setup_udev_rules() {
     if [[ -f "$UDEV_RULES_PATH" ]]; then
         echo "Udev rules already exist."
         if [[ "$(prompt "Do you want to reinstall the udev rules?")" == "yes" ]]; then
-            echo "Enter your password"
+            "Enter your password if asked. This is needed to remove existing $UDEV_RULES_PATH"
             sudo rm -f "$UDEV_RULES_PATH"
         else
             return
@@ -68,7 +68,7 @@ setup_udev_rules() {
     wget "$UDEV_RULES_URL" -O /tmp/udev_rules && echo "Downloaded udev rules to temporary location."
     echo "Enter your password if asked. This is needed to set up $UDEV_RULES_PATH"
     sudo cp /tmp/udev_rules "$UDEV_RULES_PATH" && echo "Udev rules installed successfully."
-    udevadm control --reload-rules && echo "Udev rules reloaded."
+    sudo udevadm control --reload-rules && echo "Udev rules reloaded."
 }
 
 # Main script execution
