@@ -26,6 +26,13 @@
             border-radius: 5px;
             background-color: #fff;
             margin: 20px 0;
+            display: flex;
+            align-items: center;
+        }
+        .command-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
         }
         .switcher {
             margin: 20px 0;
@@ -38,40 +45,99 @@
             width: 100%;
             overflow-x: auto;
         }
+        .copy-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+            padding: 5px;
+            transition: background-color 0.3s;
+            border-radius: 3px;
+        }
+        .copy-btn:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-btn svg {
+            width: 24px;
+            height: 24px;
+        }
+        .copied-feedback {
+            color: green;
+            margin-left: 10px;
+            display: none;
+        }
     </style>
 </head>
 <body>
 
     <h1>PixelPulse 2 AppImage Builds By Sounddrill31 - WIP/Untested</h1>
     <div class="command-box">
-        <p>Run this command on a Linux machine to get started, only for x86_64 and Linux for now.</p>
-        <div class="switcher">
-            <label>
-                <input type="radio" name="commandType" value="curl" checked>
-                curl
-            </label>
-            <label>
-                <input type="radio" name="commandType" value="wget">
-                wget
-            </label>
-        </div>
-        <div class="command" id="commandOutput">
-            curl https://sounddrill31.github.io/Pixelpulse2/install.sh -o pp2-install.sh; bash pp2-install.sh
+        <div class="command-container">
+            <div>
+                <p>Run this command on a Linux machine to get started, only for x86_64 and Linux for now.</p>
+                <div class="switcher">
+                    <label>
+                        <input type="radio" name="commandType" value="curl" checked>
+                        curl
+                    </label>
+                    <label>
+                        <input type="radio" name="commandType" value="wget">
+                        wget
+                    </label>
+                </div>
+                <div class="command" id="commandOutput">
+                    rm pp2-install.sh || true; curl https://sounddrill31.github.io/Pixelpulse2/install.sh -o pp2-install.sh; bash pp2-install.sh
+                </div>
+            </div>
+            <button class="copy-btn" id="copyBtn" aria-label="Copy to clipboard">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+            </button>
         </div>
     </div>
 
     <script>
         const commandOutput = document.getElementById('commandOutput');
         const commandTypeRadios = document.querySelectorAll('input[name="commandType"]');
+        const copyBtn = document.getElementById('copyBtn');
 
         commandTypeRadios.forEach(radio => {
             radio.addEventListener('change', () => {
                 if (radio.value === 'curl') {
-                    commandOutput.textContent = 'curl https://sounddrill31.github.io/Pixelpulse2/install.sh -o pp2-install.sh; bash pp2-install.sh';
+                    commandOutput.textContent = 'rm pp2-install.sh || true; curl https://sounddrill31.github.io/Pixelpulse2/install.sh -o pp2-install.sh; bash pp2-install.sh';
                 } else {
-                    commandOutput.textContent = 'wget https://sounddrill31.github.io/Pixelpulse2/install.sh -O pp2-install.sh; bash pp2-install.sh';
+                    commandOutput.textContent = 'rm pp2-install.sh || true; wget https://sounddrill31.github.io/Pixelpulse2/install.sh -O pp2-install.sh; bash pp2-install.sh';
                 }
             });
+        });
+
+        copyBtn.addEventListener('click', () => {
+            // Create a temporary textarea to copy the text
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = commandOutput.textContent;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+
+            // Optional: Provide visual feedback
+            copyBtn.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="green" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            `;
+
+            // Revert back to original clipboard icon after 2 seconds
+            setTimeout(() => {
+                copyBtn.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                `;
+            }, 2000);
         });
     </script>
 
