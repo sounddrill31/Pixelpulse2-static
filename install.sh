@@ -48,6 +48,16 @@ download_file() {
 setup_pp2_command() {
     mkdir -p "$BIN_DIR"
     cp "$APPIMAGE_FILE" $BIN_DIR
+
+    if [[ -f "$BIN_DIR/pp2" ]]; then
+        echo "pp2 script already exists."
+        if [[ "$(prompt "Do you want to reinstall the pp2 script?")" == "yes" ]]; then
+            sudo rm -f "$BIN_DIR/pp2"
+        else
+            return
+        fi
+    fi
+
     wget "$PP2_SCRIPT_URL" -O "$BIN_DIR/pp2"
     chmod +x "$BIN_DIR/pp2" $APPIMAGE_FILE
     echo "pp2 command set up successfully."
