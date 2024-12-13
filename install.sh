@@ -2,8 +2,8 @@
 
 # Variables
 APPIMAGE_URL="https://github.com/sounddrill31/Pixelpulse2/releases/download/12312028114/Pixelpulse2-1.0-x86_64.AppImage"
-PP2_SCRIPT_URL="https://cdn.jsdelivr.net/gh/sounddrill31/Pixelpulse2@gh-pages/pp2.sh" 
-UDEV_RULES_URL="https://cdn.jsdelivr.net/gh/sounddrill31/Pixelpulse2@gh-pages/53-adi-m1k-usb.rules"
+PP2_SCRIPT_URL="https://raw.githubusercontent.com/sounddrill31/Pixelpulse2/refs/heads/gh-pages/pp2.sh" #"https://cdn.jsdelivr.net/gh/sounddrill31/Pixelpulse2@gh-pages/pp2.sh" 
+UDEV_RULES_URL="https://raw.githubusercontent.com/sounddrill31/Pixelpulse2/refs/heads/gh-pages/53-adi-m1k-usb.rules" #"https://cdn.jsdelivr.net/gh/sounddrill31/Pixelpulse2@gh-pages/53-adi-m1k-usb.rules"
 UDEV_RULES_PATH="/etc/udev/rules.d/53-adi-m1k-usb.rules"
 BIN_DIR="$HOME/bin"
 APPIMAGE_FILE="Pixelpulse2-1.0-x86_64.AppImage"
