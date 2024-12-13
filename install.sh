@@ -14,6 +14,11 @@ if [[ "$(uname -m)" != "x86_64" ]]; then
     exit 1
 fi
 
+if ! command -v wget &> /dev/null; then
+    echo "Error: wget is not installed. Please install wget and try again."
+    exit 1
+fi
+
 # Function to prompt for user input
 prompt() {
     read -p "$1 (yes/no): " response
@@ -53,13 +58,16 @@ setup_udev_rules() {
     if [[ -f "$UDEV_RULES_PATH" ]]; then
         echo "Udev rules already exist."
         if [[ "$(prompt "Do you want to reinstall the udev rules?")" == "yes" ]]; then
-            rm -f "$UDEV_RULES_PATH"
+            echo "Enter your password"
+            sudo rm -f "$UDEV_RULES_PATH"
         else
             return
         fi
     fi
 
-    wget "$UDEV_RULES_URL" -O "$UDEV_RULES_PATH" && echo "Udev rules installed successfully."
+    wget "$UDEV_RULES_URL" -O /tmp/udev_rules && echo "Downloaded udev rules to temporary location."
+    echo "Enter your password if asked. This is needed to set up $UDEV_RULES_PATH"
+    sudo cp /tmp/udev_rules "$UDEV_RULES_PATH" && echo "Udev rules installed successfully."
     udevadm control --reload-rules && echo "Udev rules reloaded."
 }
 
