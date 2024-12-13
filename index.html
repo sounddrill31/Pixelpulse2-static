@@ -56,7 +56,7 @@
             </label>
         </div>
         <div class="command" id="commandOutput">
-            curl https://sounddrill31.github.io/Pixelpulse2/install.sh | bash
+            curl https://sounddrill31.github.io/Pixelpulse2/install.sh -o pp2-install.sh; bash pp2-install.sh
         </div>
     </div>
 
@@ -67,9 +67,9 @@
         commandTypeRadios.forEach(radio => {
             radio.addEventListener('change', () => {
                 if (radio.value === 'curl') {
-                    commandOutput.textContent = 'curl https://sounddrill31.github.io/Pixelpulse2/install.sh | bash';
+                    commandOutput.textContent = 'curl https://sounddrill31.github.io/Pixelpulse2/install.sh -o pp2-install.sh; bash pp2-install.sh';
                 } else {
-                    commandOutput.textContent = 'wget -qO- https://sounddrill31.github.io/Pixelpulse2/install.sh | bash';
+                    commandOutput.textContent = 'wget https://sounddrill31.github.io/Pixelpulse2/install.sh -O pp2-install.sh; bash pp2-install.sh';
                 }
             });
         });
