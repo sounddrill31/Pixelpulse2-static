@@ -3,7 +3,7 @@
 layout: home
 
 hero:
-  name: "PixelPulse2 AppImage"
+  name: "PixelPulse2 Linux AppImage"
   text: "(WIP/Untested)"
   tagline: PixelPulse2 AppImage Download
   actions:
@@ -26,7 +26,7 @@ features:
 ### Instructions
 - Remove Previous versions of the AppImage(Optional)
   ```bash
-  rm PixelPulse2*.AppImage
+  rm Pixelpulse2*.AppImage
   ```
 - Download the version compatible with your system from above
 - Go to the folder you saved it to(replace with correct path)
@@ -35,9 +35,9 @@ features:
   ```
 - Give it executable permissions
   ```bash
-  chmod +x PixelPulse2*.AppImage
+  chmod +x Pixelpulse2*.AppImage
   ```
 - Run the AppImage
   ```bash
-  ./PixelPulse2*.AppImage
+  ./Pixelpulse2*.AppImage
   ```
