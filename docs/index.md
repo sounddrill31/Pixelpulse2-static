@@ -24,9 +24,9 @@ features:
 ---
 
 ### Instructions
-- Remove Previous versions of the AppImage(Optional)
+- Remove Previous versions of the AppImage(Optional, replace with correct path as needed)
   ```bash
-  rm Pixelpulse2*.AppImage
+  rm Downloads/Pixelpulse2*.AppImage
   ```
 - Download the version compatible with your system from above
 - Go to the folder you saved it to(replace with correct path)
