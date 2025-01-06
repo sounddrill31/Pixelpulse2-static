@@ -4,8 +4,8 @@ layout: home
 
 hero:
   name: "PixelPulse2 Linux AppImage"
-  text: "(WIP/Untested)"
-  tagline: PixelPulse2 AppImage Download
+  #text: "(WIP/Untested)"
+  tagline: Set up Pixelpulse2 in minutes! No need to fumble with dependencies before class
   actions:
   #  - theme: Installation Guide
   #    text: Markdown Examples
