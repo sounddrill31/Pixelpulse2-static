@@ -142,6 +142,7 @@ jobs:
           cd ../..
 
           git clone https://github.com/sounddrill31/pixelpulse2
+          cd pixelpulse2
           mkdir build && cd build
           cmake ..
           make
