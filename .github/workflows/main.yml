@@ -118,7 +118,7 @@ jobs:
     - name: Build for aarch64 (Linux)
       uses: pguyot/arm-runner-action@v2
       with:
-        image_additional_mb: 1024
+        image_additional_mb: 4096
         base_image: raspios_lite_arm64:latest
         commands: |
           sudo apt update
