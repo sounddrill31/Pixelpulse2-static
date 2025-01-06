@@ -193,7 +193,11 @@ jobs:
 
           cp -r qml AppDir/usr/share/pixelpulse2/
 
-          bash -c 'export EXTRA_QT_MODULES+=quick; \
+          echo $(pwd) > ~/.oldpwd
+
+          bash -c 'echo $(pwd) > ~/.oldpwd; \
+          cd $(cat ~/.oldpwd); \
+          export EXTRA_QT_MODULES+=quick; \
           export EXTRA_QT_MODULES+=graphicaleffects; \
 
           ARCH=aarch64 \
