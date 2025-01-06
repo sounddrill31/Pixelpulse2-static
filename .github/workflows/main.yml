@@ -193,15 +193,15 @@ jobs:
 
           cp -r qml AppDir/usr/share/pixelpulse2/
 
-          export EXTRA_QT_MODULES+=quick
-          export EXTRA_QT_MODULES+=graphicaleffects
+          bash -c 'export EXTRA_QT_MODULES+=quick; \
+          export EXTRA_QT_MODULES+=graphicaleffects; \
 
           ARCH=aarch64 \
           VERSION=1.0 \
           ./linuxdeploy.AppImage \
           --appdir AppDir \
           --plugin qt \
-          --output appimage -i debian/*.png
+          --output appimage -i debian/*.png'
 
           # List the generated AppImage
           ls -l Pixelpulse2*.AppImage
