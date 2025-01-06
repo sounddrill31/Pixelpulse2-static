@@ -122,7 +122,6 @@ jobs:
         base_image: raspios_lite_arm64:latest
         commands: |
           sudo apt update
-          sudo apt upgrade
           
           DEBIAN_FRONTEND=noninteractive curl -sSL https://get.docker.com | sh
           cd CI/aarch64-linux
