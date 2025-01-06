@@ -38,9 +38,10 @@ jobs:
       if: runner.os == 'macOS'
       run: |
         brew update
-        brew install --cask docker
+        brew install --cask docker docker-machine
         cd CI/aarch64-linux
-        open -a docker
+        docker-machine create --driver virtualbox --virtualbox-no-vtx-check default
+        eval "$(docker-machine env default)"
         docker build -t pixelpulse-arm64 .
         docker run -d --name pixelpulse-builder pixelpulse-arm64
         docker cp pixelpulse-builder:/app/Pixelpulse2*.AppImage .
