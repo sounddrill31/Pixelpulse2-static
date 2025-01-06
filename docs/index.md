@@ -18,9 +18,9 @@ features:
   - title: Download For x86_64
     icon: <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#6a5acd"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>
     link: https://github.com/sounddrill31/Pixelpulse2/releases/latest/download/Pixelpulse2-1.0-x86_64.AppImage
-  - title: Download For aarch64 (Planned) 
+  - title: Download For aarch64 (WIP/Untested) 
     icon: <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#6a5acd"><path d="M791-55 686-160H240q-33 0-56.5-23.5T160-240v-120h80v120h366L503-343l-23 23-200-200 23-23L55-791l57-57 736 736-57 57ZM617-457l-57-57 64-64 56 58-63 63Zm-97-97-80-80v-166h80v246Zm280 280-80-80v-6h80v86Z"/></svg>
-  #  link: https://github.com/sounddrill31/Pixelpulse2/releases/latest/download/Pixelpulse2-1.0-arm64.AppImage
+    link: https://github.com/sounddrill31/Pixelpulse2/releases/latest/download/Pixelpulse2-1.0-aarch64.AppImage
 ---
 
 ### Pre-Setup Instructions
@@ -78,7 +78,7 @@ features:
 1. The app is known to crash after being open for some time
   - This can be replicated on some distros by connecting a device and letting it run for a while
     - This happens on:
-      - OpenSUSE Tumbleweed(Jan 2025)
+      - OpenSUSE Tumbleweed(Jan 2025, x86_64 build)
       - Fedora(Testimony by @vishal-ahirwar [(issues/266)](https://github.com/analogdevicesinc/Pixelpulse2/issues/266#issuecomment-2563701732))
       
   - This is likely not an issue caused by my packaging
@@ -86,4 +86,4 @@ features:
 
 ### Notes:
 Tested on:
-- OpenSUSE tumbleweed on Jan 2025
+- OpenSUSE tumbleweed on Jan 2025(x86_64 build)
