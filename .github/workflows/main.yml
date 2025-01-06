@@ -40,6 +40,7 @@ jobs:
         brew update
         brew install --cask docker
         cd CI/aarch64-linux
+        open -a docker
         docker build -t pixelpulse-arm64 .
         docker run -d --name pixelpulse-builder pixelpulse-arm64
         docker cp pixelpulse-builder:/app/Pixelpulse2*.AppImage .
