@@ -147,7 +147,7 @@ jobs:
           cmake ..
           make
           sudo make install
-          cd ..
+          cd ../..
   
           # Prepare AppDir structure
           mkdir -p AppDir/usr/bin
@@ -212,9 +212,10 @@ jobs:
           # List the generated AppImage
           ls -l Pixelpulse2*.AppImage
           
-          mv Pixelpulse2*.AppImage ../..
-          cd ../..
+          mv Pixelpulse2*.AppImage ..
+          cd ..
           ls Pixelpulse2*.AppImage
+          rm -rf aarch64build
 
     - name: Upload Release Asset (macOS)
       if: runner.os == 'macOS'
