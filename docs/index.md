@@ -23,7 +23,36 @@ features:
   #  link: https://github.com/sounddrill31/Pixelpulse2/releases/latest/download/Pixelpulse2-1.0-arm64.AppImage
 ---
 
-### Instructions
+### Pre-Setup Instructions
+> [!WARNING]
+> This step is important if the Pixelpulse2 app crashes after connecting to your system
+
+> [!IMPORTANT]
+> This step needs root access through sudo. If your system uses doas or doesn't have access to sudo, adjust the command to match your needs.
+
+- Install the ADALM1000 udev rule to your system
+  - This udev rule will allow the system to access the ADALM1000 Kit when connected 
+    ```bash
+    echo -e "# allow \"plugdev\" group read/write access to ADALM1000 devices\nSUBSYSTEM==\"usb\", ATTRS{idVendor}==\"064b\", ATTRS{idProduct}==\"784c\", MODE=\"0664\", GROUP=\"plugdev\", TAG+=\"uaccess\"\n# allow \"plugdev\" group read/write access to ADALM1000 devices in SAM-BA mode\nSUBSYSTEM==\"usb\", ATTRS{idVendor}==\"03eb\", ATTRS{idProduct}==\"6124\", MODE=\"0664\", GROUP=\"plugdev\", TAG+=\"uaccess\"" | sudo tee /etc/udev/rules.d/53-adi-m1k-usb.rules
+    ```
+-   Reload udev rules to ensure the change takes place
+    ```bash
+    sudo udevadm control --reload-rules
+    ```
+- To verify that it worked, run
+    ```bash
+    cat /etc/udev/rules.d/53-adi-m1k-usb.rules
+    ```
+  - This should output the contents of the file we just wrote to
+  - Expected output:
+    ```bash
+    # allow "plugdev" group read/write access to ADALM1000 devices
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="064b", ATTRS{idProduct}=="784c", MODE="0664", GROUP="plugdev", TAG+="uaccess"
+    # allow "plugdev" group read/write access to ADALM1000 devices in SAM-BA mode
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="6124", MODE="0664", GROUP="plugdev", TAG+="uaccess"
+    ```
+
+### Setup Instructions
 - Remove Previous versions of the AppImage(Optional, replace with correct path as needed)
   ```bash
   rm Downloads/Pixelpulse2*.AppImage
@@ -41,3 +70,20 @@ features:
   ```bash
   ./Pixelpulse2*.AppImage
   ```
+
+> [!TIP]
+> To Install it systemwide, [install a tool called soar](https://soar.qaidvoid.dev/installation) and run `soar install path/to/Pixelpulse2*.AppImage`
+
+### Known Issues:
+1. The app is known to crash after being open for some time
+  - This can be replicated on some distros by connecting a device and letting it run for a while
+    - This happens on:
+      - OpenSUSE Tumbleweed(Jan 2025)
+      - Fedora
+      
+  - This is likely not an issue caused by my packaging
+  - [There is an issue opened upstream](https://github.com/analogdevicesinc/Pixelpulse2/issues/266)
+
+### Notes:
+Tested on:
+- OpenSUSE tumbleweed on Jan 2025
