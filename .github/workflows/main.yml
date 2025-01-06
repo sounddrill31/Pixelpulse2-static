@@ -303,10 +303,6 @@ jobs:
             # Check library dependencies
             ldd AppDir/usr/bin/pixelpulse2
 
-            # Verify AppImage can be mounted and executed
-            chmod +x Pixelpulse2*.AppImage
-            ./Pixelpulse2*.AppImage --help || true
-
     - name: Upload Release Asset (Linux/AppImage)
       if: runner.os == 'linux'
       uses: softprops/action-gh-release@v1
