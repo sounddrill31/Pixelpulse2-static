@@ -38,7 +38,7 @@ jobs:
       if: runner.os == 'macOS'
       run: |
         brew update
-        brew install --cask docker
+        brew install --cask docker virtualbox
         brew install docker-machine
         cd CI/aarch64-linux
         docker-machine create --driver virtualbox --virtualbox-no-vtx-check default
