@@ -152,13 +152,13 @@ jobs:
           # Prepare AppDir structure
           mkdir -p AppDir/usr/bin
           mkdir -p AppDir/usr/lib
-          mkdir -p AppDir/usr/lib/x86_64-linux-gnu/
+          mkdir -p AppDir/usr/lib/aarch64-linux-gnu/
           mkdir -p AppDir/usr/share/icons/hicolor/apps/scalable
           mkdir -p AppDir/usr/share/applications
           mkdir -p AppDir/usr/share/pixelpulse2/
 
           # Copy libsmu library
-          ls /usr/lib | grep *aarch64*
+          ls /usr/lib/aarch64-linux-gnu
           cp /usr/lib/aarch64-linux-gnu/libsmu.so.1.0.4 AppDir/usr/lib/aarch64-linux-gnu/
           ln -s AppDir/usr/lib/aarch64-linux-gnu/libsmu.so.1.0.4 AppDir/usr/lib/aarch64-linux-gnu/libsmu.so.1
           ln -s AppDir/usr/lib/aarch64-linux-gnu/libsmu.so.1.0.4 AppDir/usr/lib/aarch64-linux-gnu/libsmu.so
