@@ -13,7 +13,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-20.04, macos-latest] #[ubuntu-20.04, macos-latest, windows-latest]
+        os: [ubuntu-20.04, macos-13] #[ubuntu-20.04, macos-latest, windows-latest]
       fail-fast: false # repurposing macos arm for linux aarch64 builds
 
     steps:
@@ -34,16 +34,15 @@ jobs:
         sudo apt-get install -y qml-module-qtquick2 qml-module-qtquick-extras qml-module-qtquick-window2 qml-module-qtquick-controls2 qml-module-qtquick-controls qml-module-qtgraphicaleffects  qml-module-qtquick-dialogs
         sudo apt-get install -y qml-module-qt-labs-settings qml-module-qt-labs-folderlistmodel qml-module-qtqml-models2
     
-    - name: Setup Docker and build (linux aarch64)
+    - name: Setup Docker on macOS using Colima, Lima-VM, and Homebrew. (linux aarch64)
+      if: runner.os == 'macOS'
+      uses: setup-docker-macos-action
+      id: docker
+
+    - name: Build (linux aarch64)
       if: runner.os == 'macOS'
       run: |
-        brew update
-        brew install --cask docker virtualbox
-        brew install docker-machine
         cd CI/aarch64-linux
-        curl https://github.com/boot2docker/boot2docker/releases/download/v19.03.12/boot2docker.iso -o /Users/runner/.docker/machine/cache/boot2docker.iso
-        docker-machine create --driver virtualbox --virtualbox-no-vtx-check default
-        eval "$(docker-machine env default)"
         docker build -t pixelpulse-arm64 .
         docker run -d --name pixelpulse-builder pixelpulse-arm64
         docker cp pixelpulse-builder:/app/Pixelpulse2*.AppImage .
