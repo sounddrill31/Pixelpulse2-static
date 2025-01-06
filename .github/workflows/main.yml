@@ -38,9 +38,7 @@ jobs:
       if: runner.os == 'macOS'
       run: |
         brew update
-        brew install docker docker-compose
-        brew install colima
-        colima start
+        brew install --cask docker
         cd CI/aarch64-linux
         docker build -t pixelpulse-arm64 .
         docker run -d --name pixelpulse-builder pixelpulse-arm64
