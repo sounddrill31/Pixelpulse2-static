@@ -193,6 +193,7 @@ jobs:
 
           cp -r qml AppDir/usr/share/pixelpulse2/
 
+          touch ~/.oldpwd
           echo $(pwd) > ~/.oldpwd
 
           bash -c 'echo $(pwd) > ~/.oldpwd; \
