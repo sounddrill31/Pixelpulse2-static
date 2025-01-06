@@ -120,6 +120,7 @@ jobs:
       with:
         image_additional_mb: 4096
         base_image: raspios_lite_arm64:latest
+        copy_artifact_path: ./*.AppImage
         commands: |
           sudo apt update
           
