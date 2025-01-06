@@ -41,6 +41,7 @@ jobs:
         brew install --cask docker virtualbox
         brew install docker-machine
         cd CI/aarch64-linux
+        curl https://github.com/boot2docker/boot2docker/releases/download/v19.03.12/boot2docker.iso -o /Users/runner/.docker/machine/cache/boot2docker.iso
         docker-machine create --driver virtualbox --virtualbox-no-vtx-check default
         eval "$(docker-machine env default)"
         docker build -t pixelpulse-arm64 .
