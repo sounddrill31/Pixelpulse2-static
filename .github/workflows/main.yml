@@ -37,7 +37,10 @@ jobs:
     - name: Setup Docker and build (linux aarch64)
       if: runner.os == 'macOS'
       run: |
+        brew update
         brew install docker docker-compose
+        brew install colima
+        colima start
         cd CI/aarch64-linux
         docker build -t pixelpulse-arm64 .
         docker run -d --name pixelpulse-builder pixelpulse-arm64
