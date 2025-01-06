@@ -79,10 +79,10 @@ features:
   - This can be replicated on some distros by connecting a device and letting it run for a while
     - This happens on:
       - OpenSUSE Tumbleweed(Jan 2025)
-      - Fedora
+      - Fedora(Testimony by @vishal-ahirwar [(issues/266)](https://github.com/analogdevicesinc/Pixelpulse2/issues/266#issuecomment-2563701732))
       
   - This is likely not an issue caused by my packaging
-  - [There is an issue opened upstream](https://github.com/analogdevicesinc/Pixelpulse2/issues/266)
+  - There is an issue opened upstream [(issues/266)](https://github.com/analogdevicesinc/Pixelpulse2/issues/266) that tracks this problem
 
 ### Notes:
 Tested on:
