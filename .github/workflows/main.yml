@@ -282,9 +282,10 @@ jobs:
           cd AppDir && (
             wget "https://raw.githubusercontent.com/VHSgunzo/sharun/refs/heads/main/lib4bin" -O ./lib4bin
             chmod +x ./lib4bin
-            xvfb-run -a -- ./lib4bin -p -v -e -r -k /usr/bin/pixelpulse2
+            xvfb-run -a -- sh -c 'curl -sL https://raw.githubusercontent.com/VHSgunzo/sharun/refs/heads/main/lib4bin|bash -s -- -p -v -e -r -k /usr/bin/pixelpulse2'
             ls
-            ln ./sharun ./AppRun || ln -s ./bin/pixelpulse2 ./AppRun
+            echo "Current dir is $PWD"
+            ln ./sharun ./AppRun
             ./sharun -g
           )
 
