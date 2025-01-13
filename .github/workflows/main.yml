@@ -260,8 +260,9 @@ jobs:
 
           # Copy icon
           cp /usr/share/icons/hicolor/apps/scalable/pp2.ico AppDir/usr/share/icons/hicolor/scalable/apps/
-          cp /usr/share/icons/hicolor/apps/scalable/pp2.ico AppDir
+          cp /usr/share/icons/hicolor/apps/scalable/pp2.ico
           ln -s ./pp2.ico ./AppDir/.DirIcon
+          ln -s ./pp2.ico ./AppDir/pp2.png
 
           # Copy .desktop file
           cp debian/*.desktop AppDir
