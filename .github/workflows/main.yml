@@ -279,7 +279,7 @@ jobs:
 
           cp -r qml AppDir/usr/share/pixelpulse2/
 
-          cd AppDir && (
+          ( cd AppDir
             wget "https://raw.githubusercontent.com/VHSgunzo/sharun/refs/heads/main/lib4bin" -O ./lib4bin
             chmod +x ./lib4bin
             xvfb-run -a -- ./lib4bin -p -v -e -r -k -w /usr/bin/pixelpulse2
