@@ -173,9 +173,6 @@ jobs:
           # Create .desktop file
           cp debian/*.desktop AppDir/usr/share/applications/pixelpulse2.desktop 
 
-          # Ensure executable permissions
-          chmod +x AppDir/usr/bin/pixelpulse2
-
           # Copy key system libraries that might not be auto-detected
           # Note: Be selective and only include necessary libraries
           cp /usr/lib/aarch64-linux-gnu/libudev.so.1 AppDir/usr/lib/
