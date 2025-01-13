@@ -254,15 +254,14 @@ jobs:
           ln -s ./usr/share ./AppDir/share
 
           # Copy libsmu library
-          cp /usr/lib/x86_64-linux-gnu/libsmu.so.1.0.4 AppDir/shared/lib/x86_64-linux-gnu/
-          ln -s AppDir/usr/lib/x86_64-linux-gnu/libsmu.so.1.0.4 AppDir/shared/lib/x86_64-linux-gnu/libsmu.so.1
-          ln -s AppDir/usr/lib/x86_64-linux-gnu/libsmu.so.1.0.4 AppDir/shared/lib/x86_64-linux-gnu/libsmu.so
-
-          # Copy Pixelpulse2 binary
-          cp /usr/bin/pixelpulse2 AppDir/usr/bin/
+          cp /usr/lib/x86_64-linux-gnu/libsmu.so.1.0.4           AppDir/shared/lib
+          ln -s AppDir/usr/lib/x86_64-linux-gnu/libsmu.so.1.0.4  AppDir/shared/lib/libsmu.so.1
+          ln -s AppDir/usr/lib/x86_64-linux-gnu/libsmu.so.1.0.4  AppDir/shared/lib/libsmu.so
 
           # Copy icon
-          cp /usr/share/icons/hicolor/apps/scalable/pp2.ico AppDir/usr/share/icons/hicolor/apps/scalable/
+          cp /usr/share/icons/hicolor/apps/scalable/pp2.ico AppDir/usr/share/icons/hicolor/scalable/apps/
+          cp /usr/share/icons/hicolor/apps/scalable/pp2.ico AppDir
+          ln -s ./pp2.ico ./AppDir/.DirIcon
 
           # Create .desktop file
           cp debian/*.desktop AppDir/usr/share/applications/pixelpulse2.desktop 
@@ -272,14 +271,15 @@ jobs:
 
           # Copy key system libraries that might not be auto-detected
           # Note: Be selective and only include necessary libraries
-          cp /usr/lib/x86_64-linux-gnu/libudev.so.1 AppDir/shared/lib/
-          cp /usr/lib/x86_64-linux-gnu/libusb-1.0.so.0 AppDir/shared/lib/
+          cp /usr/lib/x86_64-linux-gnu/libudev.so.1     AppDir/shared/lib/
+          cp /usr/lib/x86_64-linux-gnu/libusb-1.0.so.0  AppDir/shared/lib/
 
           # Copy udev rules
           mkdir -p AppDir/etc/udev/rules.d
           cp /etc/udev/rules.d/53-adi-m1k-usb.rules AppDir/etc/udev/rules.d/
           # Hack: Use uaccess along with plugdev
           sed -i 's/GROUP="plugdev"/GROUP="plugdev", TAG+="uaccess"/g' AppDir/etc/udev/rules.d/53-adi-m1k-usb.rules
+
           cp -r qml AppDir/usr/share/pixelpulse2/
 
           cd AppDir && (
