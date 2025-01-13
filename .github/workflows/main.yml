@@ -283,7 +283,8 @@ jobs:
             wget "https://raw.githubusercontent.com/VHSgunzo/sharun/refs/heads/main/lib4bin" -O ./lib4bin
             chmod +x ./lib4bin
             xvfb-run -a -- ./lib4bin -p -v -e -r -k /usr/bin/pixelpulse2
-            ln ./sharun ./AppRun
+            ls
+            ln ./sharun ./AppRun || ln -s ./bin/pixelpulse2 ./AppRun
             ./sharun -g
           )
 
