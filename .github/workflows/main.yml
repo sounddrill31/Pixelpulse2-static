@@ -29,7 +29,7 @@ jobs:
       if: runner.os == 'Linux'
       run: |
         sudo apt-get update
-        sudo apt-get install -y libudev-dev libusb-1.0-0-dev libboost-all-dev libfuse2 fuse3
+        sudo apt-get install -y xvfb libudev-dev libusb-1.0-0-dev libboost-all-dev libfuse2 fuse3
         sudo apt-get install -y qt5-default qttools5-dev qtdeclarative5-dev libqt5svg5-dev libqt5opengl5-dev cmake
         sudo apt-get install -y qml-module-qtquick2 qml-module-qtquick-extras qml-module-qtquick-window2 qml-module-qtquick-controls2 qml-module-qtquick-controls qml-module-qtgraphicaleffects  qml-module-qtquick-dialogs
         sudo apt-get install -y qml-module-qt-labs-settings qml-module-qt-labs-folderlistmodel qml-module-qtqml-models2
@@ -241,18 +241,22 @@ jobs:
     - name: Create AppImage with Dependencies (Linux)
       if: runner.os == 'Linux'
       run: |
+          export ARCH="$(uname -m)"
+          export VERSION=test
+          export APP=Pixelpulse2
+
           # Prepare AppDir structure
-          mkdir -p AppDir/usr/bin
-          mkdir -p AppDir/usr/lib
-          mkdir -p AppDir/usr/lib/x86_64-linux-gnu/
+          mkdir -p AppDir/shared/lib
+          mkdir -p AppDir/shared/lib/x86_64-linux-gnu/
           mkdir -p AppDir/usr/share/icons/hicolor/apps/scalable
           mkdir -p AppDir/usr/share/applications
           mkdir -p AppDir/usr/share/pixelpulse2/
+          ln -s ./usr/share ./AppDir/share
 
           # Copy libsmu library
-          cp /usr/lib/x86_64-linux-gnu/libsmu.so.1.0.4 AppDir/usr/lib/x86_64-linux-gnu/
-          ln -s AppDir/usr/lib/x86_64-linux-gnu/libsmu.so.1.0.4 AppDir/usr/lib/x86_64-linux-gnu/libsmu.so.1
-          ln -s AppDir/usr/lib/x86_64-linux-gnu/libsmu.so.1.0.4 AppDir/usr/lib/x86_64-linux-gnu/libsmu.so
+          cp /usr/lib/x86_64-linux-gnu/libsmu.so.1.0.4 AppDir/shared/lib/x86_64-linux-gnu/
+          ln -s AppDir/usr/lib/x86_64-linux-gnu/libsmu.so.1.0.4 AppDir/shared/lib/x86_64-linux-gnu/libsmu.so.1
+          ln -s AppDir/usr/lib/x86_64-linux-gnu/libsmu.so.1.0.4 AppDir/shared/lib/x86_64-linux-gnu/libsmu.so
 
           # Copy Pixelpulse2 binary
           cp /usr/bin/pixelpulse2 AppDir/usr/bin/
@@ -268,40 +272,30 @@ jobs:
 
           # Copy key system libraries that might not be auto-detected
           # Note: Be selective and only include necessary libraries
-          cp /usr/lib/x86_64-linux-gnu/libudev.so.1 AppDir/usr/lib/
-          cp /usr/lib/x86_64-linux-gnu/libusb-1.0.so.0 AppDir/usr/lib/
+          cp /usr/lib/x86_64-linux-gnu/libudev.so.1 AppDir/shared/lib/
+          cp /usr/lib/x86_64-linux-gnu/libusb-1.0.so.0 AppDir/shared/lib/
 
           # Copy udev rules
           mkdir -p AppDir/etc/udev/rules.d
           cp /etc/udev/rules.d/53-adi-m1k-usb.rules AppDir/etc/udev/rules.d/
           # Hack: Use uaccess along with plugdev
           sed -i 's/GROUP="plugdev"/GROUP="plugdev", TAG+="uaccess"/g' AppDir/etc/udev/rules.d/53-adi-m1k-usb.rules
-
-          wget -O linuxdeploy.AppImage https://github.com/linuxdeploy/linuxdeploy/releases/download/2.0.0-alpha-1-20241106/linuxdeploy-x86_64.AppImage
-          wget -O linuxdeploy-plugin-qt.AppImage https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/2.0.0-alpha-1-20241106/linuxdeploy-plugin-qt-x86_64.AppImage
-          # Create the AppImage with Qt plugin to handle Qt dependencies
-          chmod +x linuxdeploy*.AppImage
-
           cp -r qml AppDir/usr/share/pixelpulse2/
 
-          export EXTRA_QT_MODULES+=quick
-          export EXTRA_QT_MODULES+=graphicaleffects
+          cd AppDir && (
+            wget "https://raw.githubusercontent.com/VHSgunzo/sharun/refs/heads/main/lib4bin" -O ./lib4bin
+            chmod +x ./lib4bin
+            xvfb-run -a -- ./lib4bin -p -v -e -r -k /usr/bin/pixelpulse2
+          )
 
-          ARCH=x86_64 \
-          VERSION=1.0 \
-          ./linuxdeploy.AppImage \
-          --appdir AppDir \
-          --plugin qt \
-          --output appimage -i debian/*.png
+          wget "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-$ARCH.AppImage" -O appimagetool
+          ./appimagetool --comp zstd \
+          	--mksquashfs-opt -Xcompression-level --mksquashfs-opt 22 \
+          	-n "$PWD"/AppDir "$PWD"/"$APP"-"$VERSION"-anylinux-"$ARCH".AppImage
 
           # List the generated AppImage
           ls -l Pixelpulse2*.AppImage
-
-    - name: Verify AppImage Dependencies
-      if: runner.os == 'Linux'
-      run: |
-            # Check library dependencies
-            ldd AppDir/usr/bin/pixelpulse2
+          )
 
     - name: Upload Release Asset (Linux/AppImage)
       if: runner.os == 'linux'
