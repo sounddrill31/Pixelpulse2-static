@@ -247,16 +247,15 @@ jobs:
 
           # Prepare AppDir structure
           mkdir -p AppDir/shared/lib
-          mkdir -p AppDir/shared/lib/x86_64-linux-gnu/
           mkdir -p AppDir/usr/share/icons/hicolor/scalable/apps/
           mkdir -p AppDir/usr/share/applications
           mkdir -p AppDir/usr/share/pixelpulse2/
           ln -s ./usr/share ./AppDir/share
 
           # Copy libsmu library
-          cp /usr/lib/x86_64-linux-gnu/libsmu.so.1.0.4           AppDir/shared/lib
-          ln -s AppDir/usr/lib/x86_64-linux-gnu/libsmu.so.1.0.4  AppDir/shared/lib/libsmu.so.1
-          ln -s AppDir/usr/lib/x86_64-linux-gnu/libsmu.so.1.0.4  AppDir/shared/lib/libsmu.so
+          cp /usr/lib/x86_64-linux-gnu/libsmu.so.1.0.4  AppDir/shared/lib
+          ln -s ./libsmu.so.1.0.4 AppDir/shared/lib/libsmu.so.1
+          ln -s ./libsmu.so.1.0.4 AppDir/shared/lib/libsmu.so
 
           # Copy icon
           cp /usr/share/icons/hicolor/apps/scalable/pp2.ico AppDir/usr/share/icons/hicolor/scalable/apps/
