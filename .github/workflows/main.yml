@@ -260,7 +260,7 @@ jobs:
 
           # Copy icon
           cp /usr/share/icons/hicolor/apps/scalable/pp2.ico AppDir/usr/share/icons/hicolor/scalable/apps/
-          cp /usr/share/icons/hicolor/apps/scalable/pp2.ico
+          cp /usr/share/icons/hicolor/apps/scalable/pp2.ico AppDir
           ln -s ./pp2.ico ./AppDir/.DirIcon
           ln -s ./pp2.ico ./AppDir/pp2.png
 
