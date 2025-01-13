@@ -295,7 +295,6 @@ jobs:
 
           # List the generated AppImage
           ls -l Pixelpulse2*.AppImage
-          )
 
     - name: Upload Release Asset (Linux/AppImage)
       if: runner.os == 'linux'
