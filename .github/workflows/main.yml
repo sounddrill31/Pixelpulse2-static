@@ -295,6 +295,7 @@ jobs:
           )
 
           wget "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-$ARCH.AppImage" -O appimagetool
+          chmod +x ./appimagetool
           ./appimagetool --comp zstd \
           	--mksquashfs-opt -Xcompression-level --mksquashfs-opt 22 \
           	-n "$PWD"/AppDir "$PWD"/"$APP"-"$VERSION"-anylinux-"$ARCH".AppImage
