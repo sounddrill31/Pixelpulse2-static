@@ -263,8 +263,8 @@ jobs:
           cp /usr/share/icons/hicolor/apps/scalable/pp2.ico AppDir
           ln -s ./pp2.ico ./AppDir/.DirIcon
 
-          # Create .desktop file
-          cp debian/*.desktop AppDir/usr/share/applications/pixelpulse2.desktop 
+          # Copy .desktop file
+          cp debian/*.desktop AppDir
 
           # Ensure executable permissions
           chmod +x AppDir/usr/bin/pixelpulse2
