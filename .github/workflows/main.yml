@@ -286,6 +286,10 @@ jobs:
             xvfb-run -a -- ./lib4bin -p -v -e -r -k -w /usr/bin/pixelpulse2
             ls
             echo "Current dir is $PWD"
+
+            # copy all of qml
+            cp -rv /usr/lib/x86_64-linux-gnu/qt5/qml ./shared/lib/qt5
+
             ln ./sharun ./AppRun
             ./sharun -g
           )
