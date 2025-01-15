@@ -286,11 +286,6 @@ jobs:
             xvfb-run -a -- ./lib4bin -p -v -e -r -k -w /usr/bin/pixelpulse2
             ls
             echo "Current dir is $PWD"
-            if [ ! -f ./sharun ]; then
-              echo "Something went really wrong"
-              wget "https://github.com/VHSgunzo/sharun/releases/download/v0.2.3/sharun-x86_64" -O ./sharun
-              chmod +x ./sharun
-            fi
             ln ./sharun ./AppRun
             ./sharun -g
           )
