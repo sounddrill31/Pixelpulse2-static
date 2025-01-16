@@ -289,7 +289,7 @@ jobs:
 
             # copy all of qml
             cp -rv /usr/lib/x86_64-linux-gnu/qt5/qml ./shared/lib/qt5
-            cat <<- EOF > ./bin/qt.conf
+            cat > ./bin/qt.conf <<\EOF
             [Paths]
             Prefix = ../shared/lib/qt5
             Plugins = plugins
@@ -299,8 +299,6 @@ jobs:
 
             # since vulkan is deployed
             cp -rv /usr/lib/x86_64-linux-gnu/dri     ./shared/lib
-            
-
 
             ln ./sharun ./AppRun
             ./sharun -g
