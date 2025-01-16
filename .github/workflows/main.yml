@@ -289,7 +289,7 @@ jobs:
 
             # copy all of qml
             cp -rv /usr/lib/x86_64-linux-gnu/qt5/qml ./shared/lib/qt5
-            cat <<-EOF > ./bin/qt.conf
+            cat <<- EOF > ./bin/qt.conf
             [Paths]
             Prefix = ../shared/lib/qt5
             Plugins = plugins
