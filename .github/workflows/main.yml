@@ -129,7 +129,7 @@ jobs:
           cd aarch64build
 
           sudo apt-get update
-          sudo apt-get install -y libudev-dev libusb-1.0-0-dev libboost-all-dev libfuse2 fuse3 git wget build-essential 
+          sudo apt-get install -y libudev-dev libusb-1.0-0-dev libboost-all-dev libfuse2 fuse3 git wget build-essential xvfb  
           sudo apt-get install -y qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools 
           sudo apt-get install -y qttools5-dev qtdeclarative5-dev libqt5svg5-dev libqt5opengl5-dev cmake
           sudo apt-get install -y qml-module-qtquick2 qml-module-qtquick-extras qml-module-qtquick-window2 qml-module-qtquick-controls2 qml-module-qtquick-controls qml-module-qtgraphicaleffects  qml-module-qtquick-dialogs
@@ -208,6 +208,10 @@ jobs:
 
             # since vulkan is deployed
             cp -rv /usr/lib/aarch64-linux-gnu/dri     ./shared/lib
+
+            # also deploy wayland qt plugin
+            cp -vr /usr/lib/aarch64-linux-gnu/qt6/plugins/wayland-*         ./shared/lib/qt5/plugins
+
 
             ln ./sharun ./AppRun
             ./sharun -g
@@ -305,6 +309,9 @@ jobs:
 
             # since vulkan is deployed
             cp -rv /usr/lib/x86_64-linux-gnu/dri     ./shared/lib
+
+            # also deploy wayland qt plugin
+            cp -vr /usr/lib/x86_64-linux-gnu/qt5/plugins/wayland-*         ./shared/lib/qt5/plugins
 
             ln ./sharun ./AppRun
             ./sharun -g
