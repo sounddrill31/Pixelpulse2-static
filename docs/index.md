@@ -23,6 +23,10 @@ features:
     link: https://github.com/sounddrill31/Pixelpulse2/releases/latest/download/Pixelpulse2-test-anylinux-aarch64.AppImage
 ---
 
+> [!WARNING]
+> This repository is undergoing significant changes, things may break. This warning will be removed after the build is stable again.
+
+
 ### Pre-Setup Instructions
 > [!WARNING]
 > This step is important if the Pixelpulse2 app crashes after connecting to your system
