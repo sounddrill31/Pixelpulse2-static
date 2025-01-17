@@ -150,37 +150,38 @@ jobs:
           make
           sudo make install
           cd ..
+
+          # Packaging below:
   
+          export ARCH="$(uname -m)"
+          export VERSION=test
+          export APP=Pixelpulse2
+
           # Prepare AppDir structure
-          mkdir -p AppDir/usr/bin
-          mkdir -p AppDir/usr/lib
-          mkdir -p AppDir/usr/lib/aarch64-linux-gnu/
-          mkdir -p AppDir/usr/share/icons/hicolor/apps/scalable
+          mkdir -p AppDir/shared/lib
+          mkdir -p AppDir/usr/share/icons/hicolor/scalable/apps/
           mkdir -p AppDir/usr/share/applications
           mkdir -p AppDir/usr/share/pixelpulse2/
+          ln -s ./usr/share ./AppDir/share
 
           # Copy libsmu library
-          ls /usr/lib/aarch64-linux-gnu
-          cp /usr/lib/aarch64-linux-gnu/libsmu.so.1.0.4 AppDir/usr/lib/aarch64-linux-gnu/
-          ln -s AppDir/usr/lib/aarch64-linux-gnu/libsmu.so.1.0.4 AppDir/usr/lib/aarch64-linux-gnu/libsmu.so.1
-          ln -s AppDir/usr/lib/aarch64-linux-gnu/libsmu.so.1.0.4 AppDir/usr/lib/aarch64-linux-gnu/libsmu.so
-
-          # Copy Pixelpulse2 binary
-          cp /usr/bin/pixelpulse2 AppDir/usr/bin/
+          cp /usr/lib/x86_64-linux-gnu/libsmu.so.1.0.4  AppDir/shared/lib
+          ln -s ./libsmu.so.1.0.4 AppDir/shared/lib/libsmu.so.1
+          ln -s ./libsmu.so.1.0.4 AppDir/shared/lib/libsmu.so
 
           # Copy icon
-          cp /usr/share/icons/hicolor/apps/scalable/pp2.ico AppDir/usr/share/icons/hicolor/apps/scalable/
+          cp /usr/share/icons/hicolor/apps/scalable/pp2.ico AppDir/usr/share/icons/hicolor/scalable/apps/
+          cp /usr/share/icons/hicolor/apps/scalable/pp2.ico AppDir
+          ln -s ./pp2.ico ./AppDir/.DirIcon
+          ln -s ./pp2.ico ./AppDir/pp2.png
 
-          # Create .desktop file
-          cp debian/*.desktop AppDir/usr/share/applications/pixelpulse2.desktop
-
-          # Ensure executable permissions
-          chmod +x AppDir/usr/bin/pixelpulse2
+          # Copy .desktop file
+          cp debian/*.desktop AppDir
 
           # Copy key system libraries that might not be auto-detected
           # Note: Be selective and only include necessary libraries
-          cp /usr/lib/aarch64-linux-gnu/libudev.so.1 AppDir/usr/lib/
-          cp /usr/lib/aarch64-linux-gnu/libusb-1.0.so.0 AppDir/usr/lib/
+          cp /usr/lib/x86_64-linux-gnu/libudev.so.1     AppDir/shared/lib/
+          cp /usr/lib/x86_64-linux-gnu/libusb-1.0.so.0  AppDir/shared/lib/
 
           # Copy udev rules
           mkdir -p AppDir/etc/udev/rules.d
@@ -188,28 +189,35 @@ jobs:
           # Hack: Use uaccess along with plugdev
           sed -i 's/GROUP="plugdev"/GROUP="plugdev", TAG+="uaccess"/g' AppDir/etc/udev/rules.d/53-adi-m1k-usb.rules
 
-          wget -O linuxdeploy.AppImage https://github.com/linuxdeploy/linuxdeploy/releases/download/2.0.0-alpha-1-20241106/linuxdeploy-aarch64.AppImage
-          wget -O linuxdeploy-plugin-qt.AppImage https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/2.0.0-alpha-1-20241106/linuxdeploy-plugin-qt-aarch64.AppImage
-          # Create the AppImage with Qt plugin to handle Qt dependencies
-          chmod +x linuxdeploy*.AppImage
-
           cp -r qml AppDir/usr/share/pixelpulse2/
 
-          mkdir -p ~
-          touch ~/.oldpwd
-          echo $(pwd) > ~/.oldpwd
+          ( cd AppDir
+            wget "https://raw.githubusercontent.com/VHSgunzo/sharun/refs/heads/main/lib4bin" -O ./lib4bin
+            chmod +x ./lib4bin
+            xvfb-run -a -- ./lib4bin -p -v -e -r -k -w /usr/bin/pixelpulse2
+            ls
+            echo "Current dir is $PWD"
 
-          bash -c 'echo $(pwd) > ~/.oldpwd; \
-          cd $(cat ~/.oldpwd); \
-          export EXTRA_QT_MODULES+=quick; \
-          export EXTRA_QT_MODULES+=graphicaleffects; \
+            # copy all of qml
+            cp -rv /usr/lib/x86_64-linux-gnu/qt5/qml ./shared/lib/qt5
+            echo '[Paths]' > ./bin/qt.conf
+            echo 'Prefix = ../shared/lib/qt5' >> ./bin/qt.conf
+            echo 'Plugins = plugins' >> ./bin/qt.conf
+            echo 'Imports = qml' >> ./bin/qt.conf
+            echo 'Qml2Imports = qml' >> ./bin/qt.conf
 
-          ARCH=aarch64 \
-          VERSION=1.0 \
-          ./linuxdeploy.AppImage \
-          --appdir AppDir \
-          --plugin qt \
-          --output appimage -i debian/*.png'
+            # since vulkan is deployed
+            cp -rv /usr/lib/aarch64-linux-gnu/dri     ./shared/lib
+
+            ln ./sharun ./AppRun
+            ./sharun -g
+          )
+
+          wget "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-$ARCH.AppImage" -O appimagetool
+          chmod +x ./appimagetool
+          ./appimagetool --comp zstd \
+          	--mksquashfs-opt -Xcompression-level --mksquashfs-opt 22 \
+          	-n "$PWD"/AppDir "$PWD"/"$APP"-"$VERSION"-anylinux-"$ARCH".AppImage
 
           # List the generated AppImage
           ls -l Pixelpulse2*.AppImage
