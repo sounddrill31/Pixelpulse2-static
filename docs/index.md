@@ -24,7 +24,7 @@ features:
 ---
 
 > [!WARNING]
-> This repository is undergoing significant changes, things may break. This warning will be removed after the build is stable again.
+> This repository is undergoing significant changes, things may break. This warning will be removed after the build is stable again. For the last stable build, go [here](https://github.com/sounddrill31/Pixelpulse2/releases/download/12639488881/Pixelpulse2-1.0-x86_64.AppImage)
 
 
 ### Pre-Setup Instructions
