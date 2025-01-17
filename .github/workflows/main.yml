@@ -165,7 +165,7 @@ jobs:
           ln -s ./usr/share ./AppDir/share
 
           # Copy libsmu library
-          cp /usr/lib/x86_64-linux-gnu/libsmu.so.1.0.4  AppDir/shared/lib
+          cp /usr/lib/aarch64-linux-gnu/libsmu.so.1.0.4  AppDir/shared/lib
           ln -s ./libsmu.so.1.0.4 AppDir/shared/lib/libsmu.so.1
           ln -s ./libsmu.so.1.0.4 AppDir/shared/lib/libsmu.so
 
@@ -180,8 +180,8 @@ jobs:
 
           # Copy key system libraries that might not be auto-detected
           # Note: Be selective and only include necessary libraries
-          cp /usr/lib/x86_64-linux-gnu/libudev.so.1     AppDir/shared/lib/
-          cp /usr/lib/x86_64-linux-gnu/libusb-1.0.so.0  AppDir/shared/lib/
+          cp /usr/lib/aarch64-linux-gnu/libudev.so.1     AppDir/shared/lib/
+          cp /usr/lib/aarch64-linux-gnu/libusb-1.0.so.0  AppDir/shared/lib/
 
           # Copy udev rules
           mkdir -p AppDir/etc/udev/rules.d
@@ -199,7 +199,7 @@ jobs:
             echo "Current dir is $PWD"
 
             # copy all of qml
-            cp -rv /usr/lib/x86_64-linux-gnu/qt5/qml ./shared/lib/qt5
+            cp -rv /usr/lib/aarch64-linux-gnu/qt5/qml ./shared/lib/qt5
             echo '[Paths]' > ./bin/qt.conf
             echo 'Prefix = ../shared/lib/qt5' >> ./bin/qt.conf
             echo 'Plugins = plugins' >> ./bin/qt.conf
