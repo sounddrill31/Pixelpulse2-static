@@ -211,6 +211,7 @@ jobs:
             cp -rv /usr/lib/aarch64-linux-gnu/dri     ./shared/lib
 
             # also deploy wayland qt plugin
+            mkdir -p ./shared/lib/qt5/plugins
             cp -vr /usr/lib/aarch64-linux-gnu/qt5/plugins/wayland-*         ./shared/lib/qt5/plugins
             ldd ./shared/lib/qt5/plugins/*/* | awk -F"[> ]" '{print $4}' | xargs -I {} cp -nv {} ./shared/lib || true
 
@@ -313,6 +314,7 @@ jobs:
             cp -rv /usr/lib/x86_64-linux-gnu/dri     ./shared/lib
 
             # also deploy wayland qt plugin
+            mkdir -p ./shared/lib/qt5/plugins
             cp -vr /usr/lib/x86_64-linux-gnu/qt5/plugins/wayland-*         ./shared/lib/qt5/plugins
             ldd ./shared/lib/qt5/plugins/*/* | awk -F"[> ]" '{print $4}' | xargs -I {} cp -nv {} ./shared/lib || true
 
