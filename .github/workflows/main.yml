@@ -185,7 +185,7 @@ jobs:
             chmod +x ./lib4bin
             xvfb-run -a -- ./lib4bin -p -v -e -r -k -w \
               /usr/bin/pixelpulse2 \
-              /usr/lib/$ARCH-linux-gnu/dri \
+              /usr/lib/$ARCH-linux-gnu/dri/* \
               /usr/lib/$ARCH-linux-gnu/qt5/plugins/*/*
 
             # copy all of qml
