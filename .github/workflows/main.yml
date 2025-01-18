@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches:
-      - master
+      - aarch64-gh-actions
   workflow_dispatch:
  # pull_request:
  #   branches:
@@ -14,7 +14,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-20.04] #[ubuntu-20.04, macos-latest, windows-latest]
+        os: [ubuntu-20.04,ubuntu-22.04-arm] #[ubuntu-20.04, macos-latest, windows-latest]
       fail-fast: false
 
     steps:
@@ -30,8 +30,10 @@ jobs:
       if: runner.os == 'Linux'
       run: |
         sudo apt-get update
+        sudo apt-get install -y qt5-default || true
+        sudo apt-get install qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools || true # Suppress errors
         sudo apt-get install -y xvfb libudev-dev libusb-1.0-0-dev libboost-all-dev libfuse2 fuse3 #qtwayland5 
-        sudo apt-get install -y qt5-default qttools5-dev qtdeclarative5-dev libqt5svg5-dev libqt5opengl5-dev cmake
+        sudo apt-get install -y qttools5-dev qtdeclarative5-dev libqt5svg5-dev libqt5opengl5-dev cmake
         sudo apt-get install -y qml-module-qtquick2 qml-module-qtquick-extras qml-module-qtquick-window2 qml-module-qtquick-controls2 qml-module-qtquick-controls qml-module-qtgraphicaleffects  qml-module-qtquick-dialogs
         sudo apt-get install -y qml-module-qt-labs-settings qml-module-qt-labs-folderlistmodel qml-module-qtqml-models2
         
@@ -116,124 +118,6 @@ jobs:
         cd C:\projects\pixelpulse2\build
         "C:\Program Files (x86)\Inno Setup 5\ISCC.exe" pixelpulse2.iss
 
-    - name: Build for aarch64 (Linux)
-      uses: pguyot/arm-runner-action@v2
-      with:
-        image_additional_mb: 4096
-        base_image: raspios_lite_arm64:latest
-        copy_artifact_path: ./*.AppImage
-        commands: |
-          sudo apt update
-          
-          mkdir -p aarch64build
-          cd aarch64build
-
-          sudo apt-get update
-          sudo apt-get install -y file binutils patchelf findutils grep sed coreutils strace 
-          sudo apt-get install -y libudev-dev libusb-1.0-0-dev libboost-all-dev libfuse2 fuse3 git wget build-essential xvfb  
-          sudo apt-get install -y qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools #qtwayland5 
-          sudo apt-get install -y qttools5-dev qtdeclarative5-dev libqt5svg5-dev libqt5opengl5-dev cmake
-          sudo apt-get install -y qml-module-qtquick2 qml-module-qtquick-extras qml-module-qtquick-window2 qml-module-qtquick-controls2 qml-module-qtquick-controls qml-module-qtgraphicaleffects  qml-module-qtquick-dialogs
-          sudo apt-get install -y qml-module-qt-labs-settings qml-module-qt-labs-folderlistmodel qml-module-qtqml-models2
-
-          git clone https://github.com/sounddrill31/libsmu.git
-          cd libsmu
-          mkdir build && cd build
-          cmake -DBUILD_PYTHON=OFF -DCMAKE_INSTALL_PREFIX=/usr/ ..
-          make
-          sudo make install
-          cd ../..
-
-          git clone https://github.com/sounddrill31/pixelpulse2
-          cd pixelpulse2
-          mkdir build && cd build
-          cmake ..
-          make
-          sudo make install
-          cd ..
-
-          # Packaging below:
-  
-          export ARCH="$(uname -m)"
-          export VERSION=test
-          export APP=Pixelpulse2
-
-          # Prepare AppDir structure
-          mkdir -p AppDir/shared/lib
-          mkdir -p AppDir/usr/share/icons/hicolor/scalable/apps/
-          mkdir -p AppDir/usr/share/applications
-          mkdir -p AppDir/usr/share/pixelpulse2/
-          ln -s ./usr/share ./AppDir/share
-
-          # Copy libsmu library
-          cp /usr/lib/aarch64-linux-gnu/libsmu.so.1.0.4  AppDir/shared/lib
-          ln -s ./libsmu.so.1.0.4 AppDir/shared/lib/libsmu.so.1
-          ln -s ./libsmu.so.1.0.4 AppDir/shared/lib/libsmu.so
-
-          # Copy icon
-          cp /usr/share/icons/hicolor/apps/scalable/pp2.ico AppDir/usr/share/icons/hicolor/scalable/apps/
-          cp /usr/share/icons/hicolor/apps/scalable/pp2.ico AppDir
-          ln -s ./pp2.ico ./AppDir/.DirIcon
-          ln -s ./pp2.ico ./AppDir/pp2.png
-
-          # Copy .desktop file
-          cp debian/*.desktop AppDir
-
-          # Copy key system libraries that might not be auto-detected
-          # Note: Be selective and only include necessary libraries
-          cp /usr/lib/aarch64-linux-gnu/libudev.so.1     AppDir/shared/lib/
-          cp /usr/lib/aarch64-linux-gnu/libusb-1.0.so.0  AppDir/shared/lib/
-
-          # Copy udev rules
-          mkdir -p AppDir/etc/udev/rules.d
-          cp /etc/udev/rules.d/53-adi-m1k-usb.rules AppDir/etc/udev/rules.d/
-          # Hack: Use uaccess along with plugdev
-          sed -i 's/GROUP="plugdev"/GROUP="plugdev", TAG+="uaccess"/g' AppDir/etc/udev/rules.d/53-adi-m1k-usb.rules
-
-          cp -r qml AppDir/usr/share/pixelpulse2/
-
-          ( cd AppDir
-            wget "https://raw.githubusercontent.com/VHSgunzo/sharun/refs/heads/main/lib4bin" -O ./lib4bin
-            chmod +x ./lib4bin
-            xvfb-run -a -- ./lib4bin -p -v -e -r -k -w /usr/bin/pixelpulse2
-            ls
-            echo "Current dir is $PWD"
-
-            # copy all of qml
-            cp -rv /usr/lib/aarch64-linux-gnu/qt5/qml ./shared/lib/qt5
-            echo '[Paths]' > ./bin/qt.conf
-            echo 'Prefix = ../shared/lib/qt5' >> ./bin/qt.conf
-            echo 'Plugins = plugins' >> ./bin/qt.conf
-            echo 'Imports = qml' >> ./bin/qt.conf
-            echo 'Qml2Imports = qml' >> ./bin/qt.conf
-
-            # since vulkan is deployed
-            cp -rv /usr/lib/aarch64-linux-gnu/dri     ./shared/lib
-
-            # also deploy wayland qt plugin
-            #mkdir -p ./shared/lib/qt5/plugins
-            #cp -vr /usr/lib/aarch64-linux-gnu/qt5/plugins/wayland-*         ./shared/lib/qt5/plugins
-            #ldd ./shared/lib/qt5/plugins/*/* | awk -F"[> ]" '{print $4}' | xargs -I {} cp -nv {} ./shared/lib || true
-
-
-            ln ./sharun ./AppRun
-            ./sharun -g
-          )
-
-          wget "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-$ARCH.AppImage" -O appimagetool
-          chmod +x ./appimagetool
-          ./appimagetool --comp zstd \
-          	--mksquashfs-opt -Xcompression-level --mksquashfs-opt 22 \
-          	-n "$PWD"/AppDir "$PWD"/"$APP"-"$VERSION"-anylinux-"$ARCH".AppImage
-
-          # List the generated AppImage
-          ls -l Pixelpulse2*.AppImage
-          
-          mv Pixelpulse2*.AppImage ../..
-          cd ../..
-          ls Pixelpulse2*.AppImage
-          rm -rf aarch64build
-
     - name: Upload Release Asset (macOS)
       if: runner.os == 'macOS'
       uses: softprops/action-gh-release@v1
@@ -269,7 +153,7 @@ jobs:
           ln -s ./usr/share ./AppDir/share
 
           # Copy libsmu library
-          cp /usr/lib/x86_64-linux-gnu/libsmu.so.1.0.4  AppDir/shared/lib
+          cp /usr/lib/$ARCH-linux-gnu/libsmu.so.1.0.4  AppDir/shared/lib
           ln -s ./libsmu.so.1.0.4 AppDir/shared/lib/libsmu.so.1
           ln -s ./libsmu.so.1.0.4 AppDir/shared/lib/libsmu.so
 
@@ -284,8 +168,8 @@ jobs:
 
           # Copy key system libraries that might not be auto-detected
           # Note: Be selective and only include necessary libraries
-          cp /usr/lib/x86_64-linux-gnu/libudev.so.1     AppDir/shared/lib/
-          cp /usr/lib/x86_64-linux-gnu/libusb-1.0.so.0  AppDir/shared/lib/
+          cp /usr/lib/$ARCH-linux-gnu/libudev.so.1     AppDir/shared/lib/
+          cp /usr/lib/$ARCH-linux-gnu/libusb-1.0.so.0  AppDir/shared/lib/
 
           # Copy udev rules
           mkdir -p AppDir/etc/udev/rules.d
@@ -295,7 +179,8 @@ jobs:
 
           cp -r qml AppDir/usr/share/pixelpulse2/
 
-          ( cd AppDir
+          ( export ARCH="$(uname -m)" # Just to be double sure
+            cd AppDir
             wget "https://raw.githubusercontent.com/VHSgunzo/sharun/refs/heads/main/lib4bin" -O ./lib4bin
             chmod +x ./lib4bin
             xvfb-run -a -- ./lib4bin -p -v -e -r -k -w /usr/bin/pixelpulse2
@@ -303,7 +188,7 @@ jobs:
             echo "Current dir is $PWD"
 
             # copy all of qml
-            cp -rv /usr/lib/x86_64-linux-gnu/qt5/qml ./shared/lib/qt5
+            cp -rv /usr/lib/$ARCH-linux-gnu/qt5/qml ./shared/lib/qt5
             echo '[Paths]' > ./bin/qt.conf
             echo 'Prefix = ../shared/lib/qt5' >> ./bin/qt.conf
             echo 'Plugins = plugins' >> ./bin/qt.conf
@@ -311,11 +196,11 @@ jobs:
             echo 'Qml2Imports = qml' >> ./bin/qt.conf
 
             # since vulkan is deployed
-            cp -rv /usr/lib/x86_64-linux-gnu/dri     ./shared/lib
+            cp -rv /usr/lib/$ARCH-linux-gnu/dri     ./shared/lib
 
             # also deploy wayland qt plugin
             #mkdir -p ./shared/lib/qt5/plugins
-            #cp -vr /usr/lib/x86_64-linux-gnu/qt5/plugins/wayland-*         ./shared/lib/qt5/plugins
+            #cp -vr /usr/lib/$ARCH-linux-gnu/qt5/plugins/wayland-*         ./shared/lib/qt5/plugins
             #ldd ./shared/lib/qt5/plugins/*/* | awk -F"[> ]" '{print $4}' | xargs -I {} cp -nv {} ./shared/lib || true
 
             ln ./sharun ./AppRun
@@ -336,7 +221,7 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: Pixelpulse2*.AppImage
-        name: pixelpulse2-${{ github.ref_name }}.AppImage
+        name: exp-pixelpulse2-${{ github.ref_name }}.AppImage
         tag_name: ${{ github.run_id }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
