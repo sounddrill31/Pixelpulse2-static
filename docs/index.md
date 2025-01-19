@@ -7,10 +7,10 @@ hero:
   #text: "(WIP/Untested)"
   tagline: Set up Pixelpulse2 in minutes! No need to fumble with dependencies before class
   actions:
-    - theme: Screenshots
+    - theme: alt
       text: App Screenshots
       link: /screenshots
-    - theme: Debugging
+    - theme: Installation Guide
       text: Common issues and their Fixes
       link: /debug
   #  - theme: Installation Guide

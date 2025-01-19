@@ -9,9 +9,14 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
+      { text: 'Screenshots', link: '/screenshots' },
+      { text: 'Debug Issues', link: '/debug' }
       //{ text: 'Examples', link: '/markdown-examples' }
     ],
     cleanUrls: "true",
+    search: {
+      provider: 'local'
+    },
 
     sidebar: [
       {
