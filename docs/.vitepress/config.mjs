@@ -11,16 +11,18 @@ export default defineConfig({
       { text: 'Home', link: '/' },
       //{ text: 'Examples', link: '/markdown-examples' }
     ],
+    cleanUrls: "true",
 
-   /* sidebar: [
+    sidebar: [
       {
-        text: 'Examples',
+        text: 'Site Navigation',
         items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
+          { text: 'Home', link: '/' },
+          { text: 'See App Screenshots', link: '/screenshots' },
+          { text: 'Debug Issues', link: '/debug' }
         ]
       }
-    ],*/
+    ],
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/sounddrill31/Pixelpulse2' },
