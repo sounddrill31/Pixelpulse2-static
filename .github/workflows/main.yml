@@ -32,7 +32,7 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y qt5-default || true
         sudo apt-get install qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools || true # Suppress errors
-        sudo apt-get install -y xvfb libudev-dev libusb-1.0-0-dev libboost-all-dev libfuse2 fuse3 #qtwayland5 
+        sudo apt-get install -y libgl1-mesa-dri xvfb libudev-dev libusb-1.0-0-dev libboost-all-dev libfuse2 fuse3 #qtwayland5 
         sudo apt-get install -y qttools5-dev qtdeclarative5-dev libqt5svg5-dev libqt5opengl5-dev cmake
         sudo apt-get install -y qml-module-qtquick2 qml-module-qtquick-extras qml-module-qtquick-window2 qml-module-qtquick-controls2 qml-module-qtquick-controls qml-module-qtgraphicaleffects  qml-module-qtquick-dialogs
         sudo apt-get install -y qml-module-qt-labs-settings qml-module-qt-labs-folderlistmodel qml-module-qtqml-models2
@@ -183,9 +183,13 @@ jobs:
             cd AppDir
             wget "https://raw.githubusercontent.com/VHSgunzo/sharun/refs/heads/main/lib4bin" -O ./lib4bin
             chmod +x ./lib4bin
-            xvfb-run -a -- ./lib4bin -p -v -e -r -k -w /usr/bin/pixelpulse2
-            ls
-            echo "Current dir is $PWD"
+            xvfb-run -a -- ./lib4bin -p -v -e -r -k -w \
+              /usr/bin/pixelpulse2 \
+              /usr/lib/$ARCH-linux-gnu/libvulkan* \
+              /usr/lib/$ARCH-linux-gnu/libEGL* \
+              /usr/lib/$ARCH-linux-gnu/libgallium-* \
+              /usr/lib/$ARCH-linux-gnu/dri/* \
+              /usr/lib/$ARCH-linux-gnu/qt5/plugins/*/*
 
             # copy all of qml
             cp -rv /usr/lib/$ARCH-linux-gnu/qt5/qml ./shared/lib/qt5
@@ -194,14 +198,6 @@ jobs:
             echo 'Plugins = plugins' >> ./bin/qt.conf
             echo 'Imports = qml' >> ./bin/qt.conf
             echo 'Qml2Imports = qml' >> ./bin/qt.conf
-
-            # since vulkan is deployed
-            cp -rv /usr/lib/$ARCH-linux-gnu/dri     ./shared/lib
-
-            # also deploy wayland qt plugin
-            #mkdir -p ./shared/lib/qt5/plugins
-            #cp -vr /usr/lib/$ARCH-linux-gnu/qt5/plugins/wayland-*         ./shared/lib/qt5/plugins
-            #ldd ./shared/lib/qt5/plugins/*/* | awk -F"[> ]" '{print $4}' | xargs -I {} cp -nv {} ./shared/lib || true
 
             ln ./sharun ./AppRun
             ./sharun -g
