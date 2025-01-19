@@ -10,7 +10,7 @@ export default defineConfig({
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Screenshots', link: '/screenshots' },
-      { text: 'Debug Issues', link: '/debug' }
+      { text: 'Quick Fixes', link: '/debug' }
       //{ text: 'Examples', link: '/markdown-examples' }
     ],
     cleanUrls: "true",
@@ -23,8 +23,8 @@ export default defineConfig({
         text: 'Site Navigation',
         items: [
           { text: 'Home', link: '/' },
-          { text: 'See App Screenshots', link: '/screenshots' },
-          { text: 'Debug Issues', link: '/debug' }
+          { text: 'App Screenshots', link: '/screenshots' },
+          { text: 'Quick Fixes', link: '/debug' }
         ]
       }
     ],

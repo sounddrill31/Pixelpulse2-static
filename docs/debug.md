@@ -15,6 +15,6 @@ Before:
 
 After:
 
-![App respecting OS settings](assets/fixedtopbar.png)
+![App respecting OS settings](assets/measuringitself.png)
 
 Now, the app renders correctly and respects OS theming 
