@@ -1,7 +1,6 @@
 ## Pixelpulse2
 
-[![Windows Status](https://ci.appveyor.com/api/projects/status/32r7s2skrgm9ubva?svg=true)](https://ci.appveyor.com/project/sounddrill31/Pixelpulse2/branch/master)
-[![OSX Status](https://api.travis-ci.org/sounddrill31/Pixelpulse2.svg?branch=master&label=OSX)](https://travis-ci.org/sounddrill31/Pixelpulse2)
+[![Linux CI](https://github.com/sounddrill31/Pixelpulse2/actions/workflows/main.yml/badge.svg)](https://github.com/sounddrill31/Pixelpulse2/actions/workflows/main.yml)
 [![License](https://img.shields.io/badge/license-MPL-blue.svg)](https://github.com/sounddrill31/Pixelpulse2/blob/master/LICENSE)
 
 Pixelpulse is a powerful user interface for visualizing and manipulating signals while exploring systems attached to affordable analog interface devices, such as Analog Devices' ADALM1000.
