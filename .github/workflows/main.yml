@@ -37,15 +37,15 @@ jobs:
         sudo apt-get install -y qml-module-qtquick2 qml-module-qtquick-extras qml-module-qtquick-window2 qml-module-qtquick-controls2 qml-module-qtquick-controls qml-module-qtgraphicaleffects  qml-module-qtquick-dialogs
         sudo apt-get install -y qml-module-qt-labs-settings qml-module-qt-labs-folderlistmodel qml-module-qtqml-models2
         
-    #- name: Install dependencies (macOS)
-    #  if: runner.os == 'macOS'
-    #  run: |
-    #    brew update
-    #    brew install libusb qt@5 boost
-    #    brew upgrade qt@5
-    #    brew link libusb
-    #    brew link qt
-    #    echo "/usr/local/opt/qt/bin" >> $GITHUB_PATH
+    - name: Install dependencies (macOS)
+      if: runner.os == 'macOS'
+      run: |
+        brew update
+        brew install libusb qt@5 boost
+        brew upgrade qt@5
+        brew link libusb
+        brew link qt
+        echo "/usr/local/opt/qt/bin" >> $GITHUB_PATH
 
     - name: Install dependencies (Windows)
       if: runner.os == 'Windows'
@@ -96,21 +96,21 @@ jobs:
         cmake -G "MinGW Makefiles" -DCMAKE_INSTALL_PREFIX=C:\msys64\mingw64 -DCMAKE_C_COMPILER=C:\msys64\mingw64\bin\x86_64-w64-mingw32-gcc.exe -DCMAKE_CXX_COMPILER=C:\msys64\mingw64\bin\x86_64-w64-mingw32-g++.exe ..
         mingw32-make
 
-    #- name: Run macOS specific steps
-    #  if: runner.os == 'macOS'
-    #  run: |
-    #    cd build
-    #    /usr/local/opt/qt/bin/macdeployqt pixelpulse2.app -always-overwrite -verbose=2 -qmldir=../qml
-    #    cd ..
-    #    libsmupath="$(otool -L ./build/pixelpulse2.app/Contents/MacOS/pixelpulse2 | grep libsmu | cut -d " " -f 1)"
-    #    libsmuid="$(echo ${libsmupath} | rev | cut -d "/" -f 1 | rev)"
-    #    cp libsmu/build/src/${libsmuid} build/pixelpulse2.app/Contents/Frameworks/
-    #    sudo install_name_tool -id @executable_path/../Frameworks/${libsmuid} build/pixelpulse2.app/Contents/Frameworks/${libsmuid}
-    #    sudo install_name_tool -change ${libsmupath} @executable_path/../Frameworks/${libsmuid} build/pixelpulse2.app/Contents/MacOS/Pixelpulse2
-    #    cd build
-    #    /usr/local/opt/qt/bin/macdeployqt pixelpulse2.app -dmg -no-plugins
-    #    for x in *.dmg ; do mv $x ${x%.dmg}${LDIST}.dmg ; done
-    #    cd ..
+    - name: Run macOS specific steps
+      if: runner.os == 'macOS'
+      run: |
+        cd build
+        /usr/local/opt/qt/bin/macdeployqt pixelpulse2.app -always-overwrite -verbose=2 -qmldir=../qml
+        cd ..
+        libsmupath="$(otool -L ./build/pixelpulse2.app/Contents/MacOS/pixelpulse2 | grep libsmu | cut -d " " -f 1)"
+        libsmuid="$(echo ${libsmupath} | rev | cut -d "/" -f 1 | rev)"
+        cp libsmu/build/src/${libsmuid} build/pixelpulse2.app/Contents/Frameworks/
+        sudo install_name_tool -id @executable_path/../Frameworks/${libsmuid} build/pixelpulse2.app/Contents/Frameworks/${libsmuid}
+        sudo install_name_tool -change ${libsmupath} @executable_path/../Frameworks/${libsmuid} build/pixelpulse2.app/Contents/MacOS/Pixelpulse2
+        cd build
+        /usr/local/opt/qt/bin/macdeployqt pixelpulse2.app -dmg -no-plugins
+        for x in *.dmg ; do mv $x ${x%.dmg}${LDIST}.dmg ; done
+        cd ..
 
     - name: Create Windows installer
       if: runner.os == 'Windows'
@@ -122,6 +122,7 @@ jobs:
       if: runner.os == 'macOS'
       uses: softprops/action-gh-release@v1
       with:
+        target_commitish: ${{ github.ref_name }}
         files: build/*.dmg
         name: pixelpulse2-${{ github.ref_name }}.dmg
         tag_name: ${{ github.run_id }}
@@ -132,6 +133,7 @@ jobs:
       if: runner.os == 'Windows'
       uses: softprops/action-gh-release@v1
       with:
+        target_commitish: ${{ github.ref_name }}
         files: build/Pixelpulse2_win_setup.exe
         name: pixelpulse2-${{ github.ref_name }}.exe
         tag_name: ${{ github.run_id }}
@@ -216,6 +218,7 @@ jobs:
       if: runner.os == 'linux'
       uses: softprops/action-gh-release@v1
       with:
+        target_commitish: ${{ github.ref_name }}
         files: Pixelpulse2*.AppImage
         name: Pixelpulse2-${{ github.ref_name }}.AppImage
         tag_name: ${{ github.run_id }}
