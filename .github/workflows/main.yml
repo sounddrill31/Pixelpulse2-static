@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches:
-      - aarch64-gh-actions
+      - master
   workflow_dispatch:
  # pull_request:
  #   branches:
@@ -217,7 +217,7 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: Pixelpulse2*.AppImage
-        name: exp-pixelpulse2-${{ github.ref_name }}.AppImage
+        name: Pixelpulse2-${{ github.ref_name }}.AppImage
         tag_name: ${{ github.run_id }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
