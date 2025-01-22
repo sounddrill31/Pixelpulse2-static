@@ -30,7 +30,15 @@ features:
     link: https://github.com/sounddrill31/Pixelpulse2/releases/latest/download/Pixelpulse2-test-anylinux-aarch64.AppImage
 ---
 
-
+### Credits and Greetings
+- Analog Devices Inc for Software and Board
+- [@Samueru-sama](https://github.com/samueru-sama) for porting my LinuxDiploy AppImage to sharun and ensuring Qt worked
+- [Me](https://sounddrill31.github.io/) for initial x86_64 build using LinuxDeploy and eventual aarch64 port 
+- [@VHSgunzo](https://vhsgunzo.github.io/) for [sharun](https://github.com/VHSgunzo/sharun) and more
+- [AppImage](https://github.com/AppImage) and [contributors](https://github.com/AppImage/appimagetool/graphs/contributors) for [appimagetool](https://github.com/AppImage/appimagetool) and work on the AppImage format
+- [@ivan-hc](https://github.com/ivan-hc) for [AM](https://github.com/ivan-hc/AM)
+- [@meefik](https://meefik.github.io/) for [linuxdeploy](https://github.com/meefik/linuxdeploy)
+- [@probonopd](https://github.com/probonopd) for [linuxdeployqt](https://github.com/probonopd/linuxdeployqt)
 ### Pre-Setup Instructions
 > [!WARNING]
 > This step is important if the Pixelpulse2 app crashes after connecting to your system
@@ -95,3 +103,6 @@ features:
 ### Notes:
 Tested on:
 - OpenSUSE tumbleweed on Jan 2025(x86_64 build)
+
+Old Versions(not recommended):
+- [Stable LinuxDeploy x86_64 Build](https://github.com/sounddrill31/Pixelpulse2/releases/download/12639488881/Pixelpulse2-1.0-x86_64.AppImage)
