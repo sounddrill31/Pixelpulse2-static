@@ -4,7 +4,6 @@ layout: home
 
 hero:
   name: "PixelPulse2 Linux AppImage"
-  #text: "(WIP/Untested)"
   tagline: Set up Pixelpulse2 in minutes! No need to fumble with dependencies before class
   actions:
     - theme: brand
@@ -31,7 +30,7 @@ features:
 ---
 
 ### Credits and Greetings
-- Analog Devices Inc for Software and Board
+- [Analog Devices Inc](https://www.analog.com) for [Software](https://github.com/analogdevicesinc/pixelpulse2) and [Board](https://www.analog.com/en/resources/evaluation-hardware-and-software/evaluation-boards-kits/adalm1000.html)
 - [@Samueru-sama](https://github.com/samueru-sama) for porting my LinuxDiploy AppImage to sharun and ensuring Qt worked
 - [Me](https://sounddrill31.github.io/) for initial x86_64 build using LinuxDeploy and eventual aarch64 port 
 - [@VHSgunzo](https://vhsgunzo.github.io/) for [sharun](https://github.com/VHSgunzo/sharun) and more
