@@ -10,7 +10,7 @@ export default defineConfig({
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Screenshots', link: '/screenshots' },
-      { text: 'Quick Fixes', link: '/debug' }
+      { text: 'Quick Fixes', link: '/debug' },
       { text: 'Other Builds', link: 'https://m1k-builds.pages.dev' }
       //{ text: 'Examples', link: '/markdown-examples' }
     ],
