@@ -31,7 +31,7 @@ features:
 
 ### Credits and Greetings
 - [Analog Devices Inc](https://www.analog.com) for [Software](https://github.com/analogdevicesinc/pixelpulse2) and [Board](https://www.analog.com/en/resources/evaluation-hardware-and-software/evaluation-boards-kits/adalm1000.html)
-- [@Samueru-sama](https://github.com/samueru-sama) for porting my LinuxDiploy AppImage to sharun and ensuring Qt worked
+- [@Samueru-sama](https://github.com/samueru-sama) for porting my LinuxDeployQt AppImage to sharun and ensuring Qt worked
 - [Me](https://sounddrill31.github.io/) for initial x86_64 build using LinuxDeploy and eventual aarch64 port 
 - [@VHSgunzo](https://vhsgunzo.github.io/) for [sharun](https://github.com/VHSgunzo/sharun) and more
 - [AppImage](https://github.com/AppImage) and [contributors](https://github.com/AppImage/appimagetool/graphs/contributors) for [appimagetool](https://github.com/AppImage/appimagetool) and work on the AppImage format
@@ -104,4 +104,4 @@ Tested on:
 - OpenSUSE tumbleweed on Jan 2025(x86_64 build)
 
 Old Versions(not recommended):
-- [Stable LinuxDeploy x86_64 Build](https://github.com/sounddrill31/Pixelpulse2/releases/download/12639488881/Pixelpulse2-1.0-x86_64.AppImage)
+- [Stable LinuxDeployQt x86_64 Build](https://github.com/sounddrill31/Pixelpulse2/releases/download/12639488881/Pixelpulse2-1.0-x86_64.AppImage)
