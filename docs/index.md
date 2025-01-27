@@ -36,7 +36,7 @@ features:
 - [@VHSgunzo](https://vhsgunzo.github.io/) for [sharun](https://github.com/VHSgunzo/sharun) and more
 - [AppImage](https://github.com/AppImage) and [contributors](https://github.com/AppImage/appimagetool/graphs/contributors) for [appimagetool](https://github.com/AppImage/appimagetool) and work on the AppImage format
 - [@ivan-hc](https://github.com/ivan-hc) for [AM](https://github.com/ivan-hc/AM)
-- [@meefik](https://meefik.github.io/) for [linuxdeploy](https://github.com/meefik/linuxdeploy)
+- [@TheAssassin](https://assassinate-you.net) for [linuxdeploy](https://github.com/linuxdeploy/linuxdeploy)
 - [@probonopd](https://github.com/probonopd) for [linuxdeployqt](https://github.com/probonopd/linuxdeployqt)
 ### Pre-Setup Instructions
 > [!WARNING]
