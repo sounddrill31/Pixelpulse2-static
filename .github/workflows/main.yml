@@ -205,12 +205,14 @@ jobs:
               /usr/lib/$ARCH-linux-gnu/libgallium-* \
               /usr/lib/$ARCH-linux-gnu/dri/* \
               /usr/lib/$ARCH-linux-gnu/qt5/plugins/*/*
+
+              mv pixelpulse2* ../pixelpulse2-$(arch)
           )
 
           # List the generated Files
           ls -l
           tree -L 2
-          mv AppDir/pixelpulse2* pixelpulse2-$(arch)
+          
 
     - name: Upload Release Asset (Linux/AppImage)
       if: runner.os == 'linux'
