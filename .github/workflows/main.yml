@@ -149,6 +149,7 @@ jobs:
           export APP=Pixelpulse2
 
           # Prepare AppDir structure
+          mkdir -p AppDir/bin
           mkdir -p AppDir/shared/lib
           mkdir -p AppDir/usr/share/icons/hicolor/scalable/apps/
           mkdir -p AppDir/usr/share/applications
