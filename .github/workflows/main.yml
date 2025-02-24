@@ -186,7 +186,7 @@ jobs:
             cd AppDir
             wget "https://raw.githubusercontent.com/VHSgunzo/sharun/refs/heads/main/lib4bin" -O ./lib4bin
             chmod +x ./lib4bin
-            xvfb-run -a -- ./lib4bin --dst-dir static --hard-links -v --strace-mode --patch-rpath --with-hooks --wrappe-exec pixelpulse2 --with-wrappe \
+            xvfb-run -a -- ./lib4bin --hard-links -v --strace-mode --patch-rpath --with-hooks --wrappe-exec pixelpulse2 --with-wrappe \
               /usr/bin/pixelpulse2 \
               /usr/lib/$ARCH-linux-gnu/libvulkan* \
               /usr/lib/$ARCH-linux-gnu/libEGL* \
@@ -209,15 +209,15 @@ jobs:
 
           # List the generated Files
           ls -l
-          tree static
-          mv static/pixelpulse2* static/pixelpulse2-$(arch)
+          tree -L 2
+          mv pixelpulse2* pixelpulse2-$(arch)
 
     - name: Upload Release Asset (Linux/AppImage)
       if: runner.os == 'linux'
       uses: softprops/action-gh-release@v1
       with:
         target_commitish: ${{ github.ref_name }}
-        files: static/pixelpulse2*
+        files: pixelpulse2*
         name: Pixelpulse2-${{ github.ref_name }}
         tag_name: ${{ github.run_id }}
       env:
