@@ -210,7 +210,7 @@ jobs:
           # List the generated Files
           ls -l
           tree -L 2
-          mv pixelpulse2* pixelpulse2-$(arch)
+          mv AppDir/pixelpulse2* pixelpulse2-$(arch)
 
     - name: Upload Release Asset (Linux/AppImage)
       if: runner.os == 'linux'
