@@ -186,7 +186,7 @@ jobs:
             cd AppDir
             wget "https://raw.githubusercontent.com/VHSgunzo/sharun/refs/heads/main/lib4bin" -O ./lib4bin
             chmod +x ./lib4bin
-            xvfb-run -a -- ./lib4bin --dst-dir static --hard-links -v --strace-mode --patch-rpath --with-hooks --with-sharun \
+            xvfb-run -a -- ./lib4bin --dst-dir static --hard-links -v --strace-mode --patch-rpath --with-hooks --with-wrappe \
               /usr/bin/pixelpulse2 \
               /usr/lib/$ARCH-linux-gnu/libvulkan* \
               /usr/lib/$ARCH-linux-gnu/libEGL* \
