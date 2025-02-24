@@ -193,9 +193,9 @@ jobs:
             echo 'Imports = qml' >> ./bin/qt.conf
             echo 'Qml2Imports = qml' >> ./bin/qt.conf
 
-            wget "https://raw.githubusercontent.com/VHSgunzo/sharun/refs/heads/main/lib4bin" -O ./lib4bin
-            chmod +x ./lib4bin
-            xvfb-run -a -- ./lib4bin --hard-links -v --strace-mode --patch-rpath --with-hooks --wrappe-exec pixelpulse2 --with-wrappe \
+            wget https://github.com/VHSgunzo/sharun/releases/latest/download/sharun-$(uname -m)-aio -O ./sharun
+            chmod +x ./sharun
+            xvfb-run -a -- ./sharun lib4bin --hard-links -v --strace-mode --patch-rpath --with-hooks --wrappe-exec pixelpulse2 --with-wrappe \
               /usr/bin/pixelpulse2 \
               /usr/lib/$ARCH-linux-gnu/libvulkan* \
               /usr/lib/$ARCH-linux-gnu/libEGL* \
