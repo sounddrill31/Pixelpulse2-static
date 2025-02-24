@@ -186,7 +186,7 @@ jobs:
             cd AppDir
             wget "https://raw.githubusercontent.com/VHSgunzo/sharun/refs/heads/main/lib4bin" -O ./lib4bin
             chmod +x ./lib4bin
-            xvfb-run -a -- ./lib4bin -p -v -e -r -k -w \
+            xvfb-run -a -- ./lib4bin --hard-links -v --strace-mode --patch-rpath --with-hooks --with-sharun \
               /usr/bin/pixelpulse2 \
               /usr/lib/$ARCH-linux-gnu/libvulkan* \
               /usr/lib/$ARCH-linux-gnu/libEGL* \
@@ -203,25 +203,22 @@ jobs:
             echo 'Qml2Imports = qml' >> ./bin/qt.conf
 
             ln ./sharun ./AppRun
-            ./sharun -g
+            ./sharun -g --dst-dir static 
           )
 
-          wget "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-$ARCH.AppImage" -O appimagetool
-          chmod +x ./appimagetool
-          ./appimagetool --comp zstd \
-          	--mksquashfs-opt -Xcompression-level --mksquashfs-opt 22 \
-          	-n "$PWD"/AppDir "$PWD"/"$APP"-"$VERSION"-anylinux-"$ARCH".AppImage
 
-          # List the generated AppImage
-          ls -l Pixelpulse2*.AppImage
+          # List the generated Files
+          ls -l
+          tree static
+          mv static/pixelpulse2* static/pixelpulse2-$(arch)
 
     - name: Upload Release Asset (Linux/AppImage)
       if: runner.os == 'linux'
       uses: softprops/action-gh-release@v1
       with:
         target_commitish: ${{ github.ref_name }}
-        files: Pixelpulse2*.AppImage
-        name: Pixelpulse2-${{ github.ref_name }}.AppImage
+        files: static/pixelpulse2*
+        name: Pixelpulse2-${{ github.ref_name }}
         tag_name: ${{ github.run_id }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
