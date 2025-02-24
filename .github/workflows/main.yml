@@ -141,7 +141,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Create AppImage with Dependencies (Linux)
+    - name: Create Static Binary with Dependencies (Linux)
       if: runner.os == 'Linux'
       run: |
           export ARCH="$(uname -m)"
@@ -182,7 +182,9 @@ jobs:
 
           cp -r qml AppDir/usr/share/pixelpulse2/
 
-          ( export ARCH="$(uname -m)" # Just to be double sure
+          ( 
+          set -x 
+          export ARCH="$(uname -m)" # Just to be double sure
             cd AppDir
 
             # copy all of qml
