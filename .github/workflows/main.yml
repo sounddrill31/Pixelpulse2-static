@@ -198,7 +198,7 @@ jobs:
 
             wget https://github.com/VHSgunzo/sharun/releases/latest/download/sharun-$(uname -m)-aio -O ./sharun
             chmod +x ./sharun
-            xvfb-run -a -- ./sharun lib4bin --hard-links -v --strace-mode --patch-rpath --with-hooks --wrappe-exec pixelpulse2 --with-wrappe \
+            xvfb-run -a -- ./sharun lib4bin --strip --hard-links -v --strace-mode --patch-rpath --with-hooks --wrappe-exec pixelpulse2 --with-wrappe \
               /usr/bin/pixelpulse2 \
               /usr/lib/$ARCH-linux-gnu/libvulkan* \
               /usr/lib/$ARCH-linux-gnu/libEGL* \
